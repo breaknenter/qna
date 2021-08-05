@@ -35,6 +35,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # RSpec
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'rails-controller-testing'
   # Factory Girl
   gem 'factory_bot_rails'
 end
