@@ -7,14 +7,14 @@ feature 'User can login', %(
 
   User.create(email: 'someone@mail.to', password: 'qwerty12345')
 
-  background { visit '/login' }
+  background { visit new_user_session_path }
 
   scenario 'registered user tries to login' do
-    fill_in 'Email',    with: user.email
-    fill_in 'Password', with: user.password
+    fill_in 'Email',    with: 'someone@mail.to'
+    fill_in 'Password', with: 'qwerty12345'
     click_button 'Log in'
 
-    page.should have_content 'Signed in successfully.'
+    expect(page).to have_content 'Signed in successfully.'
   end
 
   scenario 'unregistered user tries to login' do
@@ -22,6 +22,6 @@ feature 'User can login', %(
     fill_in 'Password', with: 'qwerty12345'
     click_button 'Log in'
 
-    page.should have_content 'Invalid Email or password.'
+    expect(page).to have_content 'Invalid Email or password.'
   end
 end
