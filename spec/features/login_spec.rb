@@ -25,3 +25,19 @@ feature 'User can login', %(
     expect(page).to have_content 'Invalid Email or password.'
   end
 end
+
+feature 'User can logout', 'Authenticated user can logout ' do
+
+  User.create(email: 'someone@mail.to', password: 'qwerty12345')
+
+  background { visit new_user_session_path }
+
+  scenario 'Logout' do
+    fill_in 'Email',    with: 'someone@mail.to'
+    fill_in 'Password', with: 'qwerty12345'
+    click_button 'Log in'
+    click_link 'Log out'
+
+    expect(page).to have_content 'Signed out successfully.'
+  end
+end
