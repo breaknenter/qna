@@ -17,9 +17,9 @@ feature 'User can create question', %(
     visit questions_path
     click_link 'Ask question'
 
-    fill_in 'Title', 'Test title'
-    fill_in 'Text',  'Test text'
-    click_link 'Ask'
+    fill_in 'Title', with: 'Test title'
+    fill_in 'Text',  with: 'Test text'
+    click_button 'Ask'
 
     expect(page).to have_content 'Your question created.'
     expect(page).to have_content 'Test title'
