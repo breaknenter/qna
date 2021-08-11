@@ -7,9 +7,8 @@ feature 'User can create question', %(
 ) do
   given(:user) { User.create(email: 'someone@mail.to', password: 'qwerty12345') }
 
-  background { visit new_user_session_path }
-
   scenario 'Authenticated user creates a question' do
+    visit new_user_session_path
     fill_in 'Email',    with: 'someone@mail.to'
     fill_in 'Password', with: 'qwerty12345'
     click_button 'Log in'
@@ -27,5 +26,11 @@ feature 'User can create question', %(
   end
 
   scenario 'Authenticated user creates a question with errors'
-  scenario 'An unauthenticated user is trying to post a question'
+
+  scenario 'An unauthenticated user is trying to post a question' do
+    visit questions_path
+    click_link 'Ask question'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+  end
 end
