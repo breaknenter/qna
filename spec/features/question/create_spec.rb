@@ -5,36 +5,30 @@ feature 'User can create question', %(
   I, as an authenticated user,
   would like to create a question
 ) do
-  given(:user) { User.create(email: 'someone@mail.to', password: 'qwerty12345') }
+  describe 'Authenticated user' do
+    given(:user) { create(:user) }
 
-  scenario 'Authenticated user creates a question' do
-    visit new_user_session_path
-    fill_in 'Email',    with: 'someone@mail.to'
-    fill_in 'Password', with: 'qwerty12345'
-    click_button 'Log in'
+    background { sign_in(user) }
 
-    visit questions_path
-    click_link 'Ask question'
+    scenario 'creates a question' do
+      visit questions_path
+      click_link 'Ask question'
 
-    fill_in 'Title', with: 'Test title'
-    fill_in 'Text',  with: 'Test text'
-    click_button 'Ask'
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Text',  with: 'Test text'
+      click_button 'Ask'
 
-    expect(page).to have_content 'Your question created.'
-    expect(page).to have_content 'Test title'
-    expect(page).to have_content 'Test text'
-  end
+      expect(page).to have_content 'Your question created.'
+      expect(page).to have_content 'Test title'
+      expect(page).to have_content 'Test text'
+    end
 
-  scenario 'Authenticated user creates a question with errors' do
-    visit new_user_session_path
-    fill_in 'Email',    with: 'someone@mail.to'
-    fill_in 'Password', with: 'qwerty12345'
-    click_button 'Log in'
+    scenario 'creates a question with errors' do
+      visit new_question_path
+      click_button 'Ask'
 
-    visit new_question_path
-    click_button 'Ask'
-
-    expect(page).to have_content "Title can't be blank"
+      expect(page).to have_content "Title can't be blank"
+    end
   end
 
   scenario 'An unauthenticated user is trying to post a question' do

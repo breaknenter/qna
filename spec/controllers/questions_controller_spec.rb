@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let(:user) { create(:user) }
+
   describe 'GET #index' do
     # Создаём массив из 4 объектов Question
     let(:questions) { create_list(:question, 4) }
@@ -31,6 +33,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    before { login(user) }
     before { get :new }
 
     it 'assigns a new Question to @question' do
@@ -43,7 +46,9 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
-    let(:create) do
+    before { login(user) }
+
+    let(:valid) do
       post :create, params: { question: attributes_for(:question) }
     end
 
@@ -53,11 +58,11 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'save new @question in db' do
-        expect { create }.to change(Question, :count).by(1)
+        expect { valid }.to change(Question, :count).by(1)
       end
 
       it 'redirect to @question (show view)' do
-        create
+        valid
 
         expect(response).to redirect_to assigns(:question)
       end
