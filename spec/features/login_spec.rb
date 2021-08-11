@@ -13,8 +13,8 @@ feature 'User can register', 'User registration for full functionality ' do
   end
 
   scenario 'Registration with invalid data' do
-    fill_in 'Email',                 with: 'joeshmoe@mail.to'
-    fill_in 'Password',              with: 'qwerty12345'
+    fill_in 'Email',    with: 'joeshmoe@mail.to'
+    fill_in 'Password', with: 'qwerty12345'
     click_button 'Sign up'
 
     expect(page).to have_css('.alert')
