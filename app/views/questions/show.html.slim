@@ -1,2 +1,8 @@
 h2 = @question.title
 p = @question.text
+
+- if @question.answers.present?
+  p Answers:
+  = render @question.answers
+- else
+  p No answers
