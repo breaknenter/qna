@@ -1,11 +1,11 @@
 FactoryBot.define do
   sequence :title do |n|
-    "Question #{n}"
+    "Title #{n}"
   end
 
   factory :question do
     title
-    text  { 'Text text text' }
+    text  { "Text" }
 
     trait :invalid do
       title { nil }
