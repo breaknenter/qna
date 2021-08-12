@@ -62,6 +62,8 @@ group :test do
   gem 'webdrivers'
   # Shoulda Matchers
   gem 'shoulda-matchers', '~> 5.0'
+  # Launchy: save_and_open_page
+  gem 'launchy'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
