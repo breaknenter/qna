@@ -1,6 +1,15 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!
+
   def create
-    @answer = question.answers.create(answer_params)
+    @answer = question.answers.new(answer_params)
+
+    if @answer.save
+      redirect_to question, notice: 'Answer created'
+    else
+      flash.now[:alert] = 'Answer not created'
+      render 'questions/show'
+    end
   end
 
   private
