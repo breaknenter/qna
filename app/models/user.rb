@@ -2,8 +2,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :questions
-  has_many :answers
+  has_many :questions, class_name: 'Question', foreign_key: 'author_id'
+  has_many :answers,   class_name: 'Answer',   foreign_key: 'author_id'
 
   def author?(entity)
     self.id == entity.author_id
