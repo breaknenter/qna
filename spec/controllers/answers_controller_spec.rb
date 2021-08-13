@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
+  let(:user)     { create(:user) }
+  let(:question) { create(:question, author: user) }
+  let(:answer)   { create(:answer, question: question, author: user) }
 
   describe 'POST #create for authenticated user' do
-    let(:user) { create(:user) }
+    before { login(user) }
 
     let(:valid_answer) do
       post :create, params: { question_id: question, answer: attributes_for(:answer) }
@@ -13,8 +15,6 @@ RSpec.describe AnswersController, type: :controller do
     let(:invalid_answer) do
       post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
     end
-
-    before { login(user) }
 
     context 'with valid attributes' do
       it 'save new @answer in db' do

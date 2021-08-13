@@ -4,7 +4,8 @@ feature 'User can view the list of questions', %(
   Viewing questions is available
   to registered users and guests
 ) do
-  given!(:questions) { create_list(:question, 10) }
+  given(:user) { create(:user) }
+  given!(:questions) { create_list(:question, 10, author: user) }
 
   scenario 'view questions' do
     visit questions_path

@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 feature 'The user, being on the question page, can write an answer' do
-  given!(:question) { create(:question) }
+  given(:user) { create(:user) }
+  given!(:question) { create(:question, author: user) }
 
   describe 'authenticated user creates a answer' do
-    given(:user) { create(:user) }
-
     background { sign_in(user) }
     background { visit question_path question }
 

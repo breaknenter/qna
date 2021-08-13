@@ -5,7 +5,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #index' do
     # Создаём массив из 4 объектов Question
-    let(:questions) { create_list(:question, 4) }
+    let(:questions) { create_list(:question, 4, author: user) }
 
     before { get :index }
 
@@ -19,7 +19,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:question) { create(:question) }
+    let(:question) { create(:question, author: user) }
 
     before { get :show, params: { id: question } }
 
