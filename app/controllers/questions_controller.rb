@@ -23,7 +23,22 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def destroy
+    if current_user.author?(question)
+      question.destroy
+      redirect_to questions_path, notice: 'Your question delete'
+    else
+      redirect_to question, alert: 'You cannot delete someone else question'
+    end
+  end
+
   private
+
+  def question
+    @question ||= Question.find(params[:id])
+  end
+
+  helper_method :question
 
   def question_params
     params.require(:question).permit(:title, :text)
