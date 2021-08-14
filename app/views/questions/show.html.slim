@@ -6,7 +6,7 @@ p = @question.text
                       method: :delete,
                       data: { confirm: 'Delete question?' }
 
-- if @question.answers.present?
+- if @question.answers.exists?
   p Answers:
   = render @question.answers
 - else

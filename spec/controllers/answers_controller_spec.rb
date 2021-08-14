@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  let(:author)   { create(:user) }
   let(:user)     { create(:user) }
-  let(:question) { create(:question, author: user) }
-  let(:answer)   { create(:answer, question: question, author: user) }
+  let!(:question) { create(:question, author: author) }
+  let!(:answer)   { create(:answer, question: question, author: author) }
 
   describe 'POST #create for authenticated user' do
-    before { login(user) }
+    before { login(author) }
 
     let(:valid_answer) do
       post :create, params: { question_id: question, answer: attributes_for(:answer) }
@@ -38,4 +39,36 @@ RSpec.describe AnswersController, type: :controller do
       expect { answer }.to_not change(Answer, :count)
     end
   end
+
+  describe 'DELETE #destroy answer' do
+      before { login(author) }
+
+      context 'author' do
+        it 'delete answer' do
+          expect { delete :destroy, params: { question_id: question, id: answer } }
+            .to change(Answer, :count).by(-1)
+        end
+
+        it 'redirect to questions#show' do
+          delete :destroy, params: { question_id: question, id: answer }
+
+          expect(response).to redirect_to question_path(question)
+        end
+      end
+
+      context 'not author' do
+        before { login(user) }
+
+        it 'delete question' do
+          expect { delete :destroy, params: { question_id: question, id: answer } }
+            .to_not change(Answer, :count)
+        end
+
+        it 'redirect to questions#show' do
+          delete :destroy, params: { question_id: question, id: answer }
+
+          expect(response).to redirect_to question
+        end
+      end
+    end
 end
