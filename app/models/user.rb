@@ -6,6 +6,6 @@ class User < ApplicationRecord
   has_many :answers,   class_name: 'Answer',   foreign_key: 'author_id'
 
   def author?(entity)
-    self == entity.author
+    self.id == entity.author_id
   end
 end

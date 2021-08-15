@@ -13,6 +13,7 @@ feature 'The user, being on the question page, can write an answer' do
       click_button 'Answer'
 
       expect(page).to have_content 'Answer created'
+      expect(page).to have_content 'Answer text'
     end
 
     scenario 'create invalid answer' do
