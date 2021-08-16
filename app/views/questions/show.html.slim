@@ -1,7 +1,7 @@
 h2 = @question.title
 p = @question.text
 
-- if current_user&.author?(@question)
+- if current_user&.author_of?(@question)
   = link_to 'delete', question_path(@question),
                       method: :delete,
                       data: { confirm: 'Delete question?' }

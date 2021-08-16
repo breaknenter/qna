@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :questions, class_name: 'Question', foreign_key: 'author_id'
   has_many :answers,   class_name: 'Answer',   foreign_key: 'author_id'
 
-  def author?(entity)
+  def author_of?(entity)
     self.id == entity.author_id
   end
 end
