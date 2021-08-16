@@ -1,7 +1,7 @@
 hr
 p = answer.text
 
-- if current_user&.author?(answer)
+- if current_user&.author_of?(answer)
     = link_to 'delete answer', question_answer_path(answer.question, answer),
                                method: :delete,
                                data: { confirm: 'Delete answer?' }
