@@ -4,22 +4,11 @@ class AnswersController < ApplicationController
   def create
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
-
-    if @answer.save
-      redirect_to question, notice: 'Answer created'
-    else
-      flash.now[:alert] = 'Answer not created'
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def destroy
-    if current_user.author_of?(answer)
-      answer.destroy
-      redirect_to question, notice: 'Your answer delete'
-    else
-      redirect_to question, alert: 'You cannot delete someone else answer'
-    end
+    answer.destroy if current_user.author_of?(answer)
   end
 
   private

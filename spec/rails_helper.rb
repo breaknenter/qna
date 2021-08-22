@@ -75,6 +75,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Capybara
+  Capybara.javascript_driver = :selenium_chrome_headless
 end
 
 Shoulda::Matchers.configure do |config|

@@ -4,7 +4,7 @@ feature 'The user, being on the question page, can write an answer' do
   given(:user) { create(:user) }
   given!(:question) { create(:question, author: user) }
 
-  describe 'authenticated user creates a answer' do
+  describe 'authenticated user creates a answer', js: true do
     background { sign_in(user) }
     background { visit question_path question }
 
@@ -12,7 +12,6 @@ feature 'The user, being on the question page, can write an answer' do
       fill_in 'Text', with: 'Answer text'
       click_button 'Answer'
 
-      expect(page).to have_content 'Answer created'
       expect(page).to have_content 'Answer text'
     end
 
@@ -23,7 +22,7 @@ feature 'The user, being on the question page, can write an answer' do
     end
   end
 
-  describe 'unauthenticated user creates a answer' do
+  describe 'unauthenticated user creates a answer', js: true do
     scenario 'tries to answer a question' do
       visit question_path question
 

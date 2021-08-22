@@ -9,14 +9,13 @@ feature 'User can delete his own answer', %(
   given!(:question) { create(:question, author: author) }
   given!(:answer)   { create(:answer, question: question, author: author) }
 
-  describe 'author delete answer' do
+  describe 'author delete answer', js: true do
     before { sign_in(author) }
 
     scenario 'delete answer' do
       visit question_path(question)
       click_link 'delete answer'
 
-      expect(page).to     have_content 'Your answer delete'
       expect(page).to_not have_content answer.text
     end
   end
