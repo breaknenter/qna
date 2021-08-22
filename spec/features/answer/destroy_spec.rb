@@ -14,7 +14,10 @@ feature 'User can delete his own answer', %(
 
     scenario 'delete answer' do
       visit question_path(question)
-      click_link 'delete answer'
+
+      within('#answer-actions') do
+        click_link 'delete'
+      end
 
       expect(page).to_not have_content answer.text
     end
@@ -23,16 +26,16 @@ feature 'User can delete his own answer', %(
   describe 'not author delete answer' do
     before { sign_in(user) }
 
-    scenario 'delete answer' do
+    scenario 'delete' do
       visit question_path(question)
 
-      expect(page).to_not have_link 'delete answer'
+      expect(page).to_not have_link 'delete'
     end
   end
 
   scenario 'unauthenticated user delete answer' do
     visit question_path(question)
 
-    expect(page).to_not have_link 'delete answer'
+    expect(page).to_not have_link 'delete'
   end
 end
