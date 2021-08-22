@@ -10,11 +10,11 @@ RSpec.describe AnswersController, type: :controller do
     before { login(author) }
 
     let(:valid_answer) do
-      post :create, params: { question_id: question, answer: attributes_for(:answer) }
+      post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
     end
 
     let(:invalid_answer) do
-      post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
+      post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid), format: :js }
     end
 
     context 'with valid attributes' do
@@ -45,14 +45,14 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'author' do
         it 'delete answer' do
-          expect { delete :destroy, params: { question_id: question, id: answer } }
+          expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }
             .to change(Answer, :count).by(-1)
         end
 
         it 'redirect to questions#show' do
-          delete :destroy, params: { question_id: question, id: answer }
+          delete :destroy, params: { question_id: question, id: answer }, format: :js
 
-          expect(response).to redirect_to question_path(question)
+          expect(response).to render_template :destroy
         end
       end
 
@@ -60,14 +60,14 @@ RSpec.describe AnswersController, type: :controller do
         before { login(user) }
 
         it 'delete question' do
-          expect { delete :destroy, params: { question_id: question, id: answer } }
+          expect { delete :destroy, params: { question_id: question, id: answer }, format: :js }
             .to_not change(Answer, :count)
         end
 
         it 'redirect to questions#show' do
-          delete :destroy, params: { question_id: question, id: answer }
+          delete :destroy, params: { question_id: question, id: answer }, format: :js
 
-          expect(response).to redirect_to question
+          expect(response).to render_template :destroy
         end
       end
     end

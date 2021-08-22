@@ -6,11 +6,11 @@ p = @question.text
                       method: :delete,
                       data: { confirm: 'Delete question?' }
 
-- if @question.answers.exists?
-  p Answers:
-  = render @question.answers
-- else
-  p No answers
+.answers-list
+  - if @question.answers.exists?
+    = render @question.answers
+  - else
+    p No answers
 
 - if user_signed_in?
   = render 'answers/form'
