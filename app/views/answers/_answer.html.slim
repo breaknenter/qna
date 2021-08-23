@@ -4,6 +4,12 @@ div id="answer-#{answer.id}"
 
   - if current_user&.author_of?(answer)
       #answer-actions
-        = link_to 'delete', question_answer_path(answer.question, answer),
-                            method: :delete,
-                            remote: true
+        ul
+          li = link_to 'edit', '#', class: 'answers-edit-link', data: { answer_id: answer.id }
+          li = link_to 'delete', answer_path(answer), method: :delete,  remote: true
+
+        = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+          = f.label      :text
+          = f.text_field :text
+
+          = f.submit 'save'
