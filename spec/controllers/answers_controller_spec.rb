@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:author)   { create(:user) }
-  let(:user)     { create(:user) }
+  let(:author)    { create(:user) }
+  let(:user)      { create(:user) }
   let!(:question) { create(:question, author: author) }
   let!(:answer)   { create(:answer, question: question, author: author) }
 
@@ -70,5 +70,39 @@ RSpec.describe AnswersController, type: :controller do
           expect(response).to render_template :destroy
         end
       end
+  end
+
+  describe 'PATCH #update answer' do
+    before { login(author) }
+
+    context 'with valid attributes' do
+      it 'changes answer attributes' do
+        patch :update, params: { id: answer, answer: { text: 'Edited text' } }, format: :js
+
+        answer.reload
+
+        expect(answer.text).to eq 'Edited text'
+      end
+
+      it 'render update view' do
+        patch :update, params: { id: answer, answer: { text: 'Edited text' } }, format: :js
+
+        expect(response).to render_template :update
+      end
     end
+
+    context 'with invalid attributes' do
+      it 'does not changes answer attributes' do
+        expect do
+          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+        end.to_not change(answer, :text)
+      end
+
+      it 'render update view' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+
+        expect(response).to render_template :update
+      end
+    end
+  end
 end

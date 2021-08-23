@@ -27,7 +27,7 @@ feature 'User can edit his answer' do
     scenario 'try to edit other user answer'
   end
 
-  scenario 'Unauthenticated user can not edit answer' do
+  scenario 'Unauthenticated user can not edit answer', js: true do
     visit question_path(question)
 
     expect(page).to_not have_link 'edit'

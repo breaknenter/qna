@@ -9,8 +9,10 @@ feature 'The user, being on the question page, can write an answer' do
     background { visit question_path question }
 
     scenario 'create valid answer' do
-      fill_in 'Text', with: 'Answer text'
-      click_button 'Answer'
+      within '.answer-create' do
+        fill_in 'Text', with: 'Answer text'
+        click_button 'Answer'
+      end
 
       expect(page).to have_content 'Answer text'
     end
