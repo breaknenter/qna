@@ -1,10 +1,23 @@
-h2 = @question.title
-p = @question.text
+.question
+  h2#question-title = @question.title
+  p#question-text = @question.text
 
-- if current_user&.author_of?(@question)
-  = link_to 'delete', question_path(@question),
-                      method: :delete,
-                      data: { confirm: 'Delete question?' }
+  .question-errors
+
+  = form_with model: @question, local: false, class: 'question-edit hidden', html: { id: "question-#{@question.id}" } do |f|
+    = f.label      :title
+    = f.text_field :title
+
+    = f.label      :text
+    = f.text_area  :text
+
+    = f.submit 'save'
+
+  - if current_user&.author_of?(@question)
+    = link_to 'edit', '#', class: 'question-edit-link', data: { question_id: @question.id }
+    = link_to 'delete', question_path(@question),
+                        method: :delete,
+                        data: { confirm: 'Delete question?' }
 
 .answers-list
   - if @question.answers.exists?

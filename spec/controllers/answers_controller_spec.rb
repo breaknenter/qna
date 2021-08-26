@@ -104,5 +104,19 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :update
       end
     end
+
+    context 'try to edit other user answer' do
+      let(:user2) { create(:user) }
+
+      before { login(user2) }
+
+      it 'not change attributes' do
+        patch :update, params: { id: answer, answer: { text: 'Edited text' } }, format: :js
+
+        answer.reload
+
+        expect(question).to_not have_attributes(text: 'Edited text')
+      end
+    end
   end
 end
