@@ -115,4 +115,54 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    let!(:question) { create(:question, author: user) }
+
+    before { login(user) }
+
+    context 'with valid attributes' do
+      it 'changes question attributes' do
+        patch :update, params: { id: question, question: { title: 'Edited title', text: 'Edited text' } }, format: :js
+
+        question.reload
+
+        expect(question).to have_attributes(title: 'Edited title', text: 'Edited text')
+      end
+
+      it 'render update view' do
+        patch :update, params: { id: question, question: { title: 'Edited title', text: 'Edited text' } }, format: :js
+
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not changes question attributes' do
+        expect do
+          patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+        end.to_not change(question, :title)
+      end
+
+      it 'render update view' do
+        patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'try to edit other user question' do
+      let(:user2) { create(:user) }
+
+      before { login(user2) }
+
+      it 'not change' do
+        patch :update, params: { id: question, question: { title: 'Edited title', text: 'Edited text' } }, format: :js
+
+        question.reload
+
+        expect(question).to_not have_attributes(title: 'Edited title', text: 'Edited text')
+      end
+    end
+  end
 end

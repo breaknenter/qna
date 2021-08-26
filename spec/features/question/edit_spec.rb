@@ -12,23 +12,32 @@ feature 'User can edit his question' do
 
     scenario 'edit his question' do
       visit question_path(question)
-      click_link 'edit'
-      fill_in 'Text', with: 'Edited question'
-      click_button 'save'
 
-      expect(page).to_not have_content  question.text
-      expect(page).to     have_content  'Edited question'
-      expect(page).to_not have_selector 'textarea'
+      within '.question' do
+        click_link 'edit'
+        fill_in 'Title', with: 'Edited title'
+        fill_in 'Text',  with: 'Edited text'
+        click_button 'save'
+
+        expect(page).not_to have_content  question.title
+        expect(page).not_to have_content  question.text
+        expect(page).to     have_content  'Edited title'
+        expect(page).to     have_content  'Edited text'
+        expect(page).not_to have_selector 'textarea'
+      end
     end
 
     scenario 'edit his question with errors' do
       visit question_path(question)
 
-      click_link 'edit'
-      fill_in 'Text', with: ''
-      click_button 'save'
+      within '.question' do
+        click_link 'edit'
+        fill_in 'Title', with: 'Edited title'
+        fill_in 'Text',  with: ''
+        click_button 'save'
 
-      expect(page).to have_content  "Text can't be blank"
+        expect(page).to have_content "Text can't be blank"
+      end
     end
 
     scenario 'try to edit other user question' do
