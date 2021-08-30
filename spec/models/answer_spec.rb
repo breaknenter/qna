@@ -7,10 +7,34 @@ RSpec.describe Answer, type: :model do
         .class_name('User')
         .with_foreign_key('author_id')
     end
-    it { should belong_to(:question) }
+
+    it { belong_to(:question) }
+
+    it do
+      have_one(:question_with_best_answer)
+        .class_name('Question')
+        .with_foreign_key('best_answer_id')
+        .dependent(:nullify)
+    end
   end
 
   describe 'validations' do
-    it { should validate_presence_of(:text) }
+    it { validate_presence_of(:text) }
+  end
+
+  describe '#best?' do
+    let!(:user)     { create(:user) }
+    let!(:question) { create(:question, author: user) }
+    let!(:answer)   { create(:answer, question: question, author: user) }
+
+    it 'answer not be best' do
+      expect(answer).not_to be_best
+    end
+
+    context 'answer set as best' do
+      before { question.set_best_answer(answer) }
+
+      it { expect(answer).to be_best }
+    end
   end
 end
