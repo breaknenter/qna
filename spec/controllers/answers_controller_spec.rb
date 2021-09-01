@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:author)    { create(:user) }
-  let(:user)      { create(:user) }
   let!(:question) { create(:question, author: author) }
   let!(:answer)   { create(:answer, question: question, author: author) }
+  let(:user)      { create(:user) }
+  let!(:answer2)  { create(:answer, question: question, author: user) }
 
   describe 'POST #create for authenticated user' do
     before { login(author) }
@@ -116,6 +117,32 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
 
         expect(question).to_not have_attributes(text: 'Edited text')
+      end
+    end
+  end
+
+  describe 'POST #best' do
+    before { login(author) }
+
+    it 'author of question set best answer' do
+      post :best, params: { id: answer2 }, format: :js
+
+      question.reload
+
+      expect(answer2).to be_best
+      expect(response).to render_template :best
+    end
+
+    context 'no author try to set best answer' do
+      before { login(user) }
+
+      it 'no author try to set best answer' do
+        post :best, params: { id: answer }, format: :js
+
+        question.reload
+
+        expect(answer).to_not be_best
+        expect(response).to render_template :best
       end
     end
   end

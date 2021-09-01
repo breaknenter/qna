@@ -19,11 +19,12 @@
                         method: :delete,
                         data: { confirm: 'Delete question?' }
 
+.best
+  - if @question.best_answer_id
+    = render 'answers/best', answer: @question.best_answer
 .answers-list
-  - if @question.answers.exists?
-    = render @question.answers
-  - else
-    p No answers
+  - if @question.answers_ex_best.exists?
+    = render @question.answers_ex_best
 
 - if user_signed_in?
   = render 'answers/form'

@@ -27,20 +27,10 @@ RSpec.describe Question, type: :model do
     it { should validate_presence_of(:text) }
   end
 
-  describe '#set_best_answer' do
-    let(:answer) { create(:answer, question: question, author: user) }
-
-    before { question.set_best_answer(answer) }
-
-    it 'best answer set' do
-      expect(question.best_answer.id).to eq(answer.id)
-    end
-  end
-
   describe '#answers_ex_best' do
     let(:answers) { create_list(:answer, 4, question: question, author: user) }
 
-    before { question.set_best_answer(answers.first) }
+    before { answers.first.best! }
 
     it 'get all answers without best' do
       expect(question.answers_ex_best).to match_array(answers.drop(1))
