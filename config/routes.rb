@@ -9,6 +9,8 @@ Rails.application.routes.draw do
              }
 
   resources :questions do
-    resources :answers, shallow: true, only: %i[create update destroy]
+    resources :answers, shallow: true, only: %i[create update destroy] do
+      post :best, on: :member
+    end
   end
 end

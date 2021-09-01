@@ -6,6 +6,10 @@ class Answer < ApplicationRecord
 
   validates :text, presence: true
 
+  def best!
+    question.update(best_answer_id: id)
+  end
+
   def best?
     question.best_answer_id == id
   end

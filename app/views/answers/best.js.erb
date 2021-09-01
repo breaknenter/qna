@@ -1,0 +1,3 @@
+$('#answer-<%= @answer.id %>').remove();
+$('.best').html('<%= render 'answers/best', answer: @answer %>');
+$('.answers-list').html('<%= render @answer.question.answers_ex_best %>');
