@@ -8,11 +8,15 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(answer)
-      answer.update(answer_params)
+    return unless current_user.author_of?(answer)
 
-      @question = answer.question
+    if answer.update(answer_params.reject { |key| key['files'] })
+      if answer_params[:files].present?
+        answer_params[:files].each { |file| answer.files.attach(file) }
+      end
     end
+
+    @question = answer.question
   end
 
   def destroy
