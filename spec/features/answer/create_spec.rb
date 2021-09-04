@@ -17,6 +17,16 @@ feature 'The user, being on the question page, can write an answer' do
       expect(page).to have_content 'Answer text'
     end
 
+    scenario 'create answer with files' do
+      within '.answer-create' do
+        fill_in 'Text', with: 'Answer text'
+        attach_file 'File', Rails.root.join('spec/rails_helper.rb')
+        click_button 'Answer'
+      end
+
+      expect(page).to have_link 'rails_helper.rb'
+    end
+
     scenario 'create invalid answer' do
       click_button 'Answer'
 
