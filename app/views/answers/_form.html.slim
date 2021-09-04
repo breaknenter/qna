@@ -3,5 +3,6 @@
 = form_with model: [@question, Answer.new], class: 'answer-create', local: false do |f|
   = f.label :text
   = f.text_field :text
+  = f.file_field :files, multiple: true
 
   = f.submit 'Answer'
