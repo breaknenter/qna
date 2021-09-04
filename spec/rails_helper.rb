@@ -78,6 +78,11 @@ RSpec.configure do |config|
 
   # Capybara
   Capybara.javascript_driver = :selenium_chrome_headless
+
+  # Очистка tmp/storage после запуска тестов
+  config.after(:all) do
+    FileUtils.rm_rf("#{Rails.root}/tmp/storage")
+  end
 end
 
 Shoulda::Matchers.configure do |config|
