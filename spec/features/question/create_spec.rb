@@ -8,12 +8,13 @@ feature 'User can create question', %(
   describe 'Authenticated user' do
     given(:user) { create(:user) }
 
-    background { sign_in(user) }
-
-    scenario 'creates a question' do
+    background do
+      sign_in(user)
       visit questions_path
       click_link 'Ask question'
+    end
 
+    scenario 'creates a question' do
       fill_in 'Title', with: 'Test title'
       fill_in 'Text',  with: 'Test text'
       click_button 'Ask'
@@ -21,6 +22,17 @@ feature 'User can create question', %(
       expect(page).to have_content 'Your question created.'
       expect(page).to have_content 'Test title'
       expect(page).to have_content 'Test text'
+    end
+
+    scenario 'creates a question with files' do
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Text',  with: 'Test text'
+      attach_file 'Files', [Rails.root.join('spec/rails_helper.rb'),
+                            Rails.root.join('spec/spec_helper.rb')]
+      click_button 'Ask'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
     end
 
     scenario 'creates a question with errors' do
