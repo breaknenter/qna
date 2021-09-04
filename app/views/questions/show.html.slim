@@ -2,10 +2,8 @@
   h2#question-title = @question.title
   p#question-text = @question.text
 
-  - if @question.files.attached?
-    ul
-    - @question.files.each do |file|
-      li = link_to file.filename.to_s, url_for(file)
+  #question-files
+    = render 'shared/files', resource: @question
 
   .question-errors
 
@@ -15,6 +13,9 @@
 
     = f.label      :text
     = f.text_area  :text
+
+    = f.label :files
+    = f.file_field :files, multiple: true
 
     = f.submit 'save'
 

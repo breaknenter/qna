@@ -24,7 +24,13 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question.update(question_params) if current_user.author_of?(question)
+    return unless current_user.author_of?(question)
+
+    if question.update(question_params.reject { |key| key['files'] })
+      if question_params[:files].present?
+        question_params[:files].each { |file| question.files.attach(file) }
+      end
+    end
   end
 
   def destroy
@@ -39,7 +45,7 @@ class QuestionsController < ApplicationController
   private
 
   def question
-    @question ||= Question.find(params[:id])
+    @question ||= Question.with_attached_files.find(params[:id])
   end
 
   helper_method :question
