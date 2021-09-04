@@ -2,6 +2,11 @@
   h2#question-title = @question.title
   p#question-text = @question.text
 
+  - if @question.files.attached?
+    ul
+    - @question.files.each do |file|
+      li = link_to file.filename.to_s, url_for(file)
+
   .question-errors
 
   = form_with model: @question, local: false, class: 'question-edit hidden', html: { id: "question-#{@question.id}" } do |f|
