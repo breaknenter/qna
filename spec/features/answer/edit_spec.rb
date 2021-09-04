@@ -38,6 +38,22 @@ feature 'User can edit his answer' do
       expect(page).to have_content  "Text can't be blank"
     end
 
+    scenario 'edit his answer and attach file' do
+      visit question_path(question)
+
+      within('.answers-list') do
+        click_link 'edit'
+        fill_in 'Text', with: 'Edited answer'
+        attach_file 'File', Rails.root.join('spec/rails_helper.rb')
+        click_button 'save'
+
+        expect(page).to_not have_content  answer.text
+        expect(page).to     have_content  'Edited answer'
+        expect(page).to_not have_selector 'textarea'
+        expect(page).to     have_link     'rails_helper.rb'
+      end
+    end
+
     scenario 'try to edit other user answer' do
       visit question_path(question2)
 
