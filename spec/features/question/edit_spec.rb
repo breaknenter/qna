@@ -40,6 +40,25 @@ feature 'User can edit his question' do
       end
     end
 
+    scenario 'edit his question and attach new file' do
+      visit question_path(question)
+
+      within('.question') do
+        click_link 'edit'
+        fill_in 'Title', with: 'Edited title'
+        fill_in 'Text',  with: 'Edited text'
+        attach_file 'File', Rails.root.join('spec/rails_helper.rb')
+        click_button 'save'
+
+        expect(page).not_to have_content  question.title
+        expect(page).not_to have_content  question.text
+        expect(page).to     have_content  'Edited title'
+        expect(page).to     have_content  'Edited text'
+        expect(page).not_to have_selector 'textarea'
+        expect(page).to     have_link     'rails_helper.rb'
+      end
+    end
+
     scenario 'try to edit other user question' do
       visit question_path(question2)
 

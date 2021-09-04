@@ -32,7 +32,7 @@ class AnswersController < ApplicationController
   end
 
   def answer
-    @answer ||= Answer.find(params[:id])
+    @answer ||= Answer.with_attached_files.find(params[:id])
   end
 
   helper_method :question
