@@ -27,7 +27,7 @@ feature 'User can create question', %(
     scenario 'creates a question with files' do
       fill_in 'Title', with: 'Test title'
       fill_in 'Text',  with: 'Test text'
-      attach_file 'Files', [Rails.root.join('spec/rails_helper.rb'),
+      attach_file 'File', [Rails.root.join('spec/rails_helper.rb'),
                             Rails.root.join('spec/spec_helper.rb')]
       click_button 'Ask'
 
