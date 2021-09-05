@@ -27,6 +27,8 @@ feature 'The user can delete the file attached to the question' do
       given!(:question2)      { create(:question, :with_file, author: user2) }
       given!(:other_filename) { question2.files.first.filename.to_s }
 
+      before { visit question_path(question2) }
+
       scenario 'try to delete other file' do
         within '#question-files' do
           expect(page).to     have_link other_filename
