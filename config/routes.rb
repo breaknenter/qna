@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'files/destroy'
   root 'questions#index'
 
   devise_for :users,
