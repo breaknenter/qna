@@ -2,10 +2,39 @@ require 'rails_helper'
 
 RSpec.describe FilesController, type: :controller do
 
-  describe "GET #destroy" do
-    it "returns http success" do
-      get :destroy
-      expect(response).to have_http_status(:success)
+  let!(:author)   { create(:user) }
+  let!(:question) { create(:question, :with_file, author: author) }
+
+  before { login(author) }
+
+  describe 'DELETE #destroy' do
+    let(:delete_file) do
+        delete :destroy, params: { id: question.files.first }, format: :js
+    end
+
+    it 'delete file' do
+      expect { delete_file }.to change(question.files, :count).by(-1)
+    end
+
+    it 'render :destroy' do
+      delete_file
+
+      expect(response).to render_template :destroy
+    end
+
+    context 'user is not author' do
+      let!(:user)     { create(:user) }
+      let!(:question) { create(:question, :with_file, author: user) }
+
+      it 'not delete file' do
+        expect { delete_file }.to_not change(question.files, :count)
+      end
+
+      it 'render :destroy' do
+        delete_file
+
+        expect(response).to render_template :destroy
+      end
     end
   end
 
