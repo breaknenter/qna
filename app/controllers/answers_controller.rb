@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
       end
     end
 
-    @question = answer.question
+    # @question = answer.question
   end
 
   def destroy

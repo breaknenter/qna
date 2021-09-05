@@ -28,7 +28,7 @@ feature 'User can create question', %(
       fill_in 'Title', with: 'Test title'
       fill_in 'Text',  with: 'Test text'
       attach_file 'File', [Rails.root.join('spec/rails_helper.rb'),
-                            Rails.root.join('spec/spec_helper.rb')]
+                           Rails.root.join('spec/spec_helper.rb')]
       click_button 'Ask'
 
       expect(page).to have_link 'rails_helper.rb'
