@@ -13,4 +13,6 @@ Rails.application.routes.draw do
       post :best, on: :member
     end
   end
+
+  resources :files, only: :destroy
 end
