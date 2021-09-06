@@ -19,6 +19,6 @@ div class='answer' id="answer-#{answer.id}"
           = f.text_field :text
 
           = f.label :files
-          = f.file_field :files, multiple: true
+          = f.file_field :files, multiple: true, direct_upload: true
 
           = f.submit 'save'
