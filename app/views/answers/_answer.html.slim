@@ -2,7 +2,8 @@ div class='answer' id="answer-#{answer.id}"
   hr
   p = answer.text
 
-  = render 'shared/files', resource: answer
+  .answer-files
+    = render 'shared/files', resource: answer
 
   - if current_user&.author_of?(answer.question)
       = link_to 'set as best', best_answer_path(answer), class: 'answers-best-link', method: :post, remote: true
