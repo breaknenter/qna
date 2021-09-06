@@ -4,6 +4,7 @@ test:
 
 cloudinary:
   service: Cloudinary
+  folder: images
 
 # local:
 #   service: Disk
