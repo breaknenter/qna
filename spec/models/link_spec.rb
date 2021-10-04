@@ -1,5 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Link, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+    describe 'associations' do
+      it { belong_to(:question) }
+    end
+
+    describe 'validations' do
+      it { validate_presence_of(:name) }
+      it { validate_presence_of(:url) }
+    end
 end
