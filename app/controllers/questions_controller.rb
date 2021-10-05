@@ -52,6 +52,9 @@ class QuestionsController < ApplicationController
   helper_method :question
 
   def question_params
-    params.require(:question).permit(:title, :text, files: [])
+    params.require(:question).permit(:title,
+                                     :text,
+                                     files: [],
+                                     links_attributes: [:name, :url])
   end
 end
