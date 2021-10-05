@@ -22,6 +22,8 @@ RSpec.describe Question, type: :model do
     it { have_many(:answers).dependent(:destroy) }
 
     it { should have_many(:links).dependent(:destroy) }
+
+    it { should accept_nested_attributes_for :links }
   end
 
   it 'have many attached files' do
