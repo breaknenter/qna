@@ -1,18 +1,21 @@
 = form_with model: @question, local: false do |f|
-  = f.label :title
-  = f.text_field :title
+  p
+    = f.label :title
+    = f.text_field :title
 
-  = f.label :text
-  = f.text_area :text
+  p
+    = f.label :text
+    = f.text_area :text
 
-  = f.label :files
-  = f.file_field :files, multiple: true, direct_upload: true
+  p
+    = f.label :files
+    = f.file_field :files, multiple: true, direct_upload: true
 
-  = f.fields_for :links do |l|
-      = l.label :name, 'Link name'
-      = l.text_field :name
+  = f.fields_for :links do |link|
+      p
+        = render 'shared/link_fields', f: link
 
-      = l.label :url
-      = l.text_field :url
+  p
+    = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
 
   = f.submit 'Ask'
