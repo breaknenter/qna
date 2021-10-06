@@ -1,21 +1,39 @@
 require 'rails_helper'
 
 feature 'The user can add links to the question' do
-  given!(:user) { create(:user) }
-  given!(:url)  { 'https://onepagelove.com' }
+  given!(:user)         { create(:user) }
+  given!(:link)         { 'onepagelove' }
+  given!(:url)          { 'https://onepagelove.com' }
+  given!(:invalid_url)  { 'onepagelove.com' }
 
-  scenario 'User adds a link when creating a question' do
-    sign_in(user)
-    visit new_question_path
+  context 'authenticated user creating a question' do
+    background do
+      sign_in(user)
+      visit new_question_path
+    end
 
-    fill_in 'Title', with: 'Test title'
-    fill_in 'Text',  with: 'Test text'
+    scenario 'with valid link' do
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Text',  with: 'Test text'
 
-    fill_in 'Link name', with: 'onepagelove'
-    fill_in 'Url',       with: url
+      fill_in 'Link name', with: link
+      fill_in 'Url',       with: url
 
-    click_button 'Ask'
+      click_button 'Ask'
 
-    expect(page).to have_link 'onepagelove', href: url
+      expect(page).to have_link link, href: url
+    end
+
+    scenario 'with invalid link' do
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Text',  with: 'Test text'
+
+      fill_in 'Link name', with: link
+      fill_in 'Url',       with: invalid_url
+
+      click_button 'Ask'
+
+      expect(page).to have_content 'Invalid URL format'
+    end
   end
 end
