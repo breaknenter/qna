@@ -1,6 +1,12 @@
 FactoryBot.define do
+  sequence :name do |n|
+    "Link #{n}"
+  end
+
   factory :link do
-    name { "MyString" }
-    url { "MyString" }
+    question
+
+    name
+    url { 'https://url.to' }
   end
 end
