@@ -2,4 +2,8 @@ p Links:
 
 ul
   - links.each do |link|
-    li = link_to link.name, link.url
+    li 
+      p
+        = link_to link.name, link.url
+        - if current_user&.author_of?(link.question)
+          small = link_to 'delete', link_path(link), method: :delete, remote: true
