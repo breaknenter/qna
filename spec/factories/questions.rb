@@ -4,6 +4,8 @@ FactoryBot.define do
   end
 
   factory :question do
+    author
+
     title
     text  { "Text" }
 
