@@ -15,7 +15,13 @@
     = f.text_area  :text
 
     = f.label :files
-    = f.file_field :files, multiple: true
+    = f.file_field :files, multiple: true, direct_upload: true
+
+    = f.fields_for :links do |link|
+      p
+        = render 'shared/link_fields', f: link
+
+        = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
 
     = f.submit 'save'
 
