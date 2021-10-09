@@ -7,6 +7,12 @@ feature 'User can edit his question' do
   given!(:user2)     { create(:user) }
   given!(:question2) { create(:question, author: user2) }
 
+  given!(:link) { { name: 'Link', url: 'https://link.to' } }
+
+  background do
+    question.links.create(link)
+  end
+
   describe 'Authenticated user', js: true do
     before { sign_in(user) }
 
@@ -57,6 +63,20 @@ feature 'User can edit his question' do
         expect(page).not_to have_selector 'textarea'
         expect(page).to     have_link     'rails_helper.rb'
       end
+    end
+
+    scenario 'edit link' do
+      visit question_path(question)
+      click_link 'edit'
+
+      within '.nested-fields:first-of-type' do
+        fill_in 'Link name', with: 'Edited link'
+        fill_in 'Url',       with: 'https://editedlink.to'
+      end
+
+      click_button 'save'
+
+      expect(page).to have_link 'Edited link', href: 'https://editedlink.to'
     end
 
     scenario 'try to edit other user question' do
