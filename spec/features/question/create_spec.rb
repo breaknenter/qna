@@ -35,6 +35,18 @@ feature 'User can create question', %(
       expect(page).to have_link 'spec_helper.rb'
     end
 
+    scenario 'creates a question with link' do
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Text',  with: 'Test text'
+
+      fill_in 'Link name', with: 'onepagelove'
+      fill_in 'Url',       with: 'https://onepagelove.com'
+
+      click_button 'Ask'
+
+      expect(page).to have_link 'onepagelove', href: 'https://onepagelove.com'
+    end
+
     scenario 'creates a question with errors' do
       visit new_question_path
       click_button 'Ask'
