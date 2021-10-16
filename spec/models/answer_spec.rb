@@ -19,6 +19,10 @@ RSpec.describe Answer, type: :model do
         .with_foreign_key('best_answer_id')
         .dependent(:nullify)
     end
+
+    it { should have_many(:links).dependent(:destroy) }
+
+    it { should accept_nested_attributes_for :links }
   end
 
   it 'have many attached files' do
