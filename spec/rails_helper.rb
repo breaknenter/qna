@@ -78,6 +78,7 @@ RSpec.configure do |config|
 
   # Capybara
   Capybara.javascript_driver = :selenium_chrome_headless
+  Capybara.default_max_wait_time = 5
 
   # Очистка tmp/storage после запуска тестов
   config.after(:all) do
