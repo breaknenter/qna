@@ -4,7 +4,7 @@ FactoryBot.define do
   end
 
   factory :link do
-    question
+    association :linkable, factory: :question
 
     name
     url { 'https://url.to' }
