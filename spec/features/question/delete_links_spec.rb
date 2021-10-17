@@ -17,11 +17,12 @@ feature 'The author can remove links to his question' do
     visit question_path(question)
 
     within('.links') do
+      # first(:link, 'delete').click
       click_link('delete', match: :first)
     end
 
-    expect(page).to_not have_link link1[:name], href: link1[:url]
-    expect(page).to     have_link link2[:name], href: link2[:url]
+    expect(page).to have_no_link link2[:name], href: link2[:url]
+    expect(page).to have_link    link1[:name], href: link1[:url]
   end
 
   context 'not the author is trying to delete the link' do
