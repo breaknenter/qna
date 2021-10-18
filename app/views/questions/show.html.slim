@@ -21,6 +21,7 @@
       p
         = render 'shared/link_fields', f: link
 
+    p
       = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
 
     = f.submit 'save'

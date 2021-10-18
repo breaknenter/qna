@@ -11,6 +11,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    build_links
+
     question
   end
 
@@ -56,5 +58,9 @@ class QuestionsController < ApplicationController
                                      :text,
                                      files: [],
                                      links_attributes: [:id, :name, :url, :_destroy])
+  end
+
+  def build_links
+    question.links.build unless question.links
   end
 end
