@@ -29,6 +29,19 @@ feature 'The user can add links to the answer' do
     end
 
     scenario 'with invalid link' do
+      within '.answer-create' do
+        fill_in 'Text', with: 'Answer text'
+
+        fill_in 'Link name', with: ''
+        fill_in 'Url',       with: invalid_url
+
+        click_button 'Answer'
+      end
+
+      within '.answer-errors' do
+        expect(page).to have_content "name can't be blank"
+        expect(page).to have_content 'Invalid URL format'
+      end
     end
   end
 end
