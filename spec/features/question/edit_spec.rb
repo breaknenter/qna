@@ -69,21 +69,21 @@ feature 'User can edit his question' do
       visit question_path(question)
       click_link 'edit'
 
-      within '.nested-fields:first-of-type' do
+      within '.question-edit' do
         fill_in 'Link name', with: 'Edited link'
         fill_in 'Url',       with: 'https://editedlink.to'
       end
 
       click_button 'save'
 
-      expect(page).to have_link    'Edited link', href: 'https://editedlink.to'
+      expect(page).to have_link 'Edited link', href: 'https://editedlink.to'
     end
 
     scenario 'add a link' do
       visit question_path(question)
       click_link 'edit'
 
-      within '.nested-fields:last-of-type' do
+      within '.question-edit' do
         fill_in 'Link name', with: 'Added link'
         fill_in 'Url',       with: 'https://addedlink.to'
       end

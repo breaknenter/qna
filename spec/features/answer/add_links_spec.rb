@@ -7,7 +7,7 @@ feature 'The user can add links to the answer' do
   given!(:url)         { 'https://onepagelove.com' }
   given!(:invalid_url) { 'onepagelove.com' }
 
-  context 'authenticated user creating a answer' do
+  context 'authenticated user creating a answer', js: true do
     background do
       sign_in(user)
       visit question_path(question)
