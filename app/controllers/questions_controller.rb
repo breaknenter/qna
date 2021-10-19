@@ -11,6 +11,9 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @answer = Answer.new
+    @answer.links.build
+
     build_links
 
     question

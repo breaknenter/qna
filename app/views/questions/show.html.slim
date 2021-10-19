@@ -18,11 +18,9 @@
     = f.file_field :files, multiple: true, direct_upload: true
 
     = f.fields_for :links do |link|
-      p
-        = render 'shared/link_fields', f: link
+      p = render 'shared/link_fields', f: link
 
-    p
-      = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
+    p = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
 
     = f.submit 'save'
 
