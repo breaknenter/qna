@@ -9,6 +9,12 @@ feature 'User can edit his answer' do
   given!(:question2) { create(:question, author: user2) }
   given!(:answer2)   { create(:answer, question: question2, author: user2) }
 
+  given!(:link) { { name: 'Link', url: 'https://link.to' } }
+
+  background do
+    answer.links.create(link)
+  end
+
   describe 'Authenticated user', js: true do
     before { sign_in(user) }
 
@@ -51,6 +57,24 @@ feature 'User can edit his answer' do
         expect(page).to     have_content  'Edited answer'
         expect(page).to_not have_selector 'textarea'
         expect(page).to     have_link     'rails_helper.rb'
+      end
+    end
+
+    scenario 'edit his answer and change link' do
+    end
+
+    scenario 'edit his answer and add new link' do
+      visit question_path(question)
+
+      within('.answers-list') do
+        click_link 'edit'
+
+        fill_in 'Link name', with: 'Added link'
+        fill_in 'Url',       with: 'https://addedlink.to'
+
+        click_button 'save'
+
+        expect(page).to have_link 'Added link', href: 'https://addedlink.to'
       end
     end
 
