@@ -61,6 +61,20 @@ feature 'User can edit his answer' do
     end
 
     scenario 'edit his answer and change link' do
+      visit question_path(question)
+
+      within('.answers-list') do
+        click_link 'edit'
+
+        within('.nested-fields:first-of-type') do
+          fill_in 'Link name', with: 'Changed link'
+          fill_in 'Url',       with: 'https://changedlink.to'
+        end
+
+        click_button 'save'
+
+        expect(page).to have_link 'Changed link', href: 'https://changedlink.to'
+      end
     end
 
     scenario 'edit his answer and add new link' do
