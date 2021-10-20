@@ -69,8 +69,10 @@ feature 'User can edit his answer' do
       within('.answers-list') do
         click_link 'edit'
 
-        fill_in 'Link name', with: 'Added link'
-        fill_in 'Url',       with: 'https://addedlink.to'
+        within('.nested-fields:last-of-type') do
+          fill_in 'Link name', with: 'Added link'
+          fill_in 'Url',       with: 'https://addedlink.to'
+        end
 
         click_button 'save'
 
