@@ -10,13 +10,12 @@ feature 'User can create question', %(
 
     background do
       sign_in(user)
-      visit questions_path
-      click_link 'Ask question'
+      visit new_question_path
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Text',  with: 'Test text'
     end
 
     scenario 'creates a question' do
-      fill_in 'Title', with: 'Test title'
-      fill_in 'Text',  with: 'Test text'
       click_button 'Ask'
 
       expect(page).to have_content 'Your question created.'
@@ -25,8 +24,6 @@ feature 'User can create question', %(
     end
 
     scenario 'creates a question with files' do
-      fill_in 'Title', with: 'Test title'
-      fill_in 'Text',  with: 'Test text'
       attach_file 'File', [Rails.root.join('spec/rails_helper.rb'),
                            Rails.root.join('spec/spec_helper.rb')]
       click_button 'Ask'
@@ -36,9 +33,6 @@ feature 'User can create question', %(
     end
 
     scenario 'creates a question with link' do
-      fill_in 'Title', with: 'Test title'
-      fill_in 'Text',  with: 'Test text'
-
       fill_in 'Link name', with: 'onepagelove'
       fill_in 'Url',       with: 'https://onepagelove.com'
 
