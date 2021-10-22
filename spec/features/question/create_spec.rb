@@ -41,6 +41,16 @@ feature 'User can create question', %(
       expect(page).to have_link 'onepagelove', href: 'https://onepagelove.com'
     end
 
+    scenario 'creates a question with reward' do
+      fill_in 'Reward', with: 'Reward name'
+      attach_file 'Image', Rails.root.join('spec/files/reward.jpg')
+
+      click_button 'Ask'
+
+      expect(page).to have_css("img[src*='reward.jpg']")
+      expect(page).to have_content 'Reward name'
+    end
+
     scenario 'creates a question with errors' do
       visit new_question_path
       click_button 'Ask'
