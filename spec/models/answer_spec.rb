@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Answer, type: :model do
   let(:user)     { create(:user) }
   let(:question) { create(:question, author: user) }
+  let(:question_with_reward) { create(:question, author: user) }
+  let!(:reward) { create(:reward, question: question_with_reward, user: nil ) }
 
   describe 'associations' do
     it do
@@ -40,6 +42,13 @@ RSpec.describe Answer, type: :model do
 
     it 'set as best' do
       expect(question.best_answer.id).to eq(answer.id)
+    end
+
+    context 'set as best with reward' do
+      let!(:answer) { create(:answer, question: question_with_reward, author: user) }
+      before { answer.best! }
+
+      it { expect(reward.user).to eq(user) }
     end
   end
 
