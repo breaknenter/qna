@@ -1,6 +1,6 @@
 h1 Rewards:
 
-- if @rewards
+- if @rewards.present?
   - @rewards.each do |reward|
     h2 = link_to reward.question.title, question_path(reward.question)
 
