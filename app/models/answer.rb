@@ -14,6 +14,10 @@ class Answer < ApplicationRecord
 
   def best!
     question.update(best_answer_id: id)
+
+    if question.reward
+      question.reward.update(user_id: author_id)
+    end
   end
 
   def best?
