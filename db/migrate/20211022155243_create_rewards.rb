@@ -4,7 +4,7 @@ class CreateRewards < ActiveRecord::Migration[6.1]
       t.string :name, null: false
 
       t.references :question, foreign_key: true, index: { unique: true }, null: false
-      t.references :user,     foreign_key: true
+      t.references :user,     foreign_key: true, index: { unique: true }
 
       t.timestamps
     end

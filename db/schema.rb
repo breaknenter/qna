@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 2021_10_22_155243) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["question_id"], name: "index_rewards_on_question_id", unique: true
-    t.index ["user_id"], name: "index_rewards_on_user_id"
+    t.index ["user_id"], name: "index_rewards_on_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
