@@ -5,6 +5,13 @@
   #question-files
     = render 'shared/files', resource: @question
 
+  #reward
+    - if @question.reward
+      p Reward:
+      figure
+        = image_tag @question.reward.image
+        figcaption = @question.reward.name
+
   .question-errors
 
   = form_with model: @question, local: false, class: 'question-edit hidden', html: { id: "question-#{@question.id}" } do |f|
