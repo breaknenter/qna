@@ -13,10 +13,9 @@ class Answer < ApplicationRecord
   validates :text, presence: true
 
   def best!
-    question.update(best_answer_id: id)
-
-    if question.reward
-      question.reward.update(user_id: author_id)
+    transaction do
+      question.update!(best_answer_id: id)
+      question.reward&.update!(user_id: author_id)
     end
   end
 
