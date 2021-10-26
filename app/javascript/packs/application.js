@@ -11,6 +11,7 @@ import "jquery"
 import "@nathanvda/cocoon"
 import "./questions"
 import "./answers"
+import "./gists_load"
 
 Rails.start()
 Turbolinks.start()

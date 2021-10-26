@@ -12,4 +12,8 @@ $('.question-errors').html('<%= render 'shared/errors', resource: @question %>')
 
   $('.question-edit-link').show();
   $('.question-edit').addClass('hidden');
+
+  $('.question-edit').find('input').each(function() {
+    $(this).val('');
+  });
 <% end %>
