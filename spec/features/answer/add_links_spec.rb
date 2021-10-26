@@ -6,6 +6,7 @@ feature 'The user can add links to the answer' do
   given!(:link)        { 'onepagelove' }
   given!(:url)         { 'https://onepagelove.com' }
   given!(:invalid_url) { 'onepagelove.com' }
+  given!(:gist_url)    { 'https://gist.github.com/breaknenter/297fdd1adf66023e67b752ddf96b37d4' }
 
   context 'authenticated user creating a answer', js: true do
     background do
@@ -25,6 +26,22 @@ feature 'The user can add links to the answer' do
 
       within '.answers-list' do
         expect(page).to have_link link, href: url
+      end
+    end
+
+    scenario 'with valid link to gist' do
+      within '.answer-create' do
+        fill_in 'Text', with: 'Answer text'
+
+        fill_in 'Link name', with: 'Gist'
+        fill_in 'Url',       with: gist_url
+
+        click_button 'Answer'
+      end
+
+      within '.answers-list' do
+        expect(page).to have_link    'test_gist.txt', href: gist_url
+        expect(page).to have_content 'What thou lovest well remains, the rest is dross'
       end
     end
 
