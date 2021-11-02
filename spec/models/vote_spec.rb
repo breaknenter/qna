@@ -30,12 +30,13 @@ RSpec.describe Vote, type: :model do
   end
 
   describe 'validate :self_like' do
-    subject { build(:vote) }
+    let!(:question) { create :question }
+    let!(:vote) { build(:vote, user: question.author, votable: question) }
 
     it "drop self-like with error 'self-like it for xxxx'" do
-      subject.valid?
+      vote.valid?
 
-      expect(subject.errors[:user]).to include('self-like it for xxxx')
+      expect(vote.errors[:user]).to include('self-like it for xxxx')
     end
   end
 end
