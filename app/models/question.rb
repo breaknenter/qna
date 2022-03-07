@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  include Votable
+
   belongs_to :author,      class_name: 'User',   foreign_key: 'author_id'
   belongs_to :best_answer, class_name: 'Answer', foreign_key: 'best_answer_id', dependent: :destroy, optional: true
 
