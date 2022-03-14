@@ -5,7 +5,7 @@ RSpec.describe Vote, type: :model do
     subject { build(:vote) }
 
     it { should belong_to(:user) }
-    it { should belong_to(:votable) }
+    it { should belong_to(:voteable) }
   end
 
   describe 'validations' do
@@ -15,23 +15,23 @@ RSpec.describe Vote, type: :model do
     it { should validate_inclusion_of(:value).in_array([1, -1]) }
     it do
       should validate_uniqueness_of(:user)
-               .scoped_to(:votable_type, :votable_id)
+               .scoped_to(:voteable_type, :voteable_id)
                .with_message('you have already voted')
     end
   end
 
-  describe 'validates :votable_type' do
-    subject { build(:vote, votable_type: 'Other') }
-    it 'invalid votable_type' do
+  describe 'validates :voteable_type' do
+    subject { build(:vote, voteable_type: 'Other') }
+    it 'invalid voteable_type' do
       subject.valid?
 
-      expect(subject.errors[:votable_type]).to include('is not included in the list')
+      expect(subject.errors[:voteable_type]).to include('is not included in the list')
     end
   end
 
   describe 'validate :self_like' do
     let!(:question) { create :question }
-    let!(:vote) { build(:vote, user: question.author, votable: question) }
+    let!(:vote) { build(:vote, user: question.author, voteable: question) }
 
     it "drop self-like with error 'self-like it for xxxx'" do
       vote.valid?
