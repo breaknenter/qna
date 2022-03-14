@@ -99,13 +99,13 @@ ActiveRecord::Schema.define(version: 2021_10_29_183843) do
   create_table "votes", force: :cascade do |t|
     t.integer "value", null: false
     t.bigint "user_id", null: false
-    t.string "votable_type", null: false
-    t.bigint "votable_id", null: false
+    t.string "voteable_type", null: false
+    t.bigint "voteable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id", "votable_type", "votable_id"], name: "index_votes_on_user_id_and_votable_type_and_votable_id", unique: true
+    t.index ["user_id", "voteable_type", "voteable_id"], name: "index_votes_on_user_id_and_voteable_type_and_voteable_id", unique: true
     t.index ["user_id"], name: "index_votes_on_user_id"
-    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
+    t.index ["voteable_type", "voteable_id"], name: "index_votes_on_voteable"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
