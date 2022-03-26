@@ -8,8 +8,15 @@ Rails.application.routes.draw do
                sign_out: :logout
              }
 
-  resources :questions do
-    resources :answers, shallow: true, only: %i[create update destroy] do
+  concern :voteable do
+    member do
+      post :vote_up
+      post :vote_down
+    end
+  end
+
+  resources :questions, concerns: :voteable do
+    resources :answers, concerns: :voteable, shallow: true, only: %i[create update destroy] do
       post :best, on: :member
     end
   end
