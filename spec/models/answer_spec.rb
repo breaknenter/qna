@@ -1,6 +1,9 @@
 require 'rails_helper'
+require Rails.root.join 'spec/models/concerns/voteable.rb'
 
 RSpec.describe Answer, type: :model do
+  it_behaves_like 'voteable'
+
   let(:user)     { create(:user) }
   let(:question) { create(:question, author: user) }
   let(:question_with_reward) { create(:question, author: user) }
