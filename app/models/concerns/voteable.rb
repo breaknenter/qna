@@ -4,4 +4,16 @@ module Voteable
   included do
     has_many :votes, as: :voteable, dependent: :destroy
   end
+
+  def vote!(user:, value:)
+    vote = votes.find_by(user_id: user.id)
+
+    unless vote
+      vote = votes.create(user_id: user.id, value: value)
+    else
+      value != vote.value ? vote.destroy : vote.update(value: value)
+    end
+
+    vote
+  end
 end

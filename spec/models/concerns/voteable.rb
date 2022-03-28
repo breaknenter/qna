@@ -16,7 +16,7 @@ shared_examples_for 'voteable' do
 
   describe '#vote!' do
     it 'user vote up' do
-      expect { voteable.vote!(user: user, value: 1) }.to change(voteable.votes, :count).by(1)
+      expect { voteable.vote!(user: user, value: 1) }.to change(voteable.votes, :count).from(0).to(1)
     end
   end
 end
