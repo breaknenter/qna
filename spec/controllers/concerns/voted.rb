@@ -19,11 +19,11 @@ shared_examples_for 'voted' do
       before { login(user) }
 
       let(:vote) do
-        post :vote_up, params: { id: voteable, value: 1 }, format: :json
+        post :vote_up, params: { id: voteable }, format: :json
       end
 
       it 'changes votes count' do
-        expect { vote }.to change(voteable.votes, :count).by(1)
+        expect { vote }.to change(voteable.votes, :count).from(0).to(1)
       end
 
       it 'returns a 200 OK status' do
