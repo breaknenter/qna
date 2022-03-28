@@ -1,5 +1,5 @@
 require 'rails_helper'
-require Rails.root.join 'spec/controllers/concerns/voted_spec.rb'
+require Rails.root.join 'spec/controllers/concerns/voted.rb'
 
 RSpec.describe QuestionsController, type: :controller do
   it_behaves_like 'voted'
