@@ -6,6 +6,10 @@ module Voted
     before_action :set_voteable,       only: %i[vote_up vote_down]
   end
 
+  def vote_up
+    vote = @voteable.vote!(user: current_user, value: 1)
+  end
+
   private
 
   def model_klass
