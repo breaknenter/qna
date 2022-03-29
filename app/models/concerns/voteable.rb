@@ -16,4 +16,8 @@ module Voteable
 
     vote
   end
+
+  def rating
+    votes.sum(:value)
+  end
 end

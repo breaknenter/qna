@@ -21,8 +21,8 @@ shared_examples_for 'voteable' do
   end
 
   describe '#rating' do
-    let!(:users) { build_list(:user, 4) }
-    votes = [1, 1, -1, 1]
+    let!(:users) { create_list(:user, 7) }
+    votes = [1, 1, 1, 1, -1, 1, 1]
 
     before do
       users.each_with_index do |user, num|
@@ -30,8 +30,8 @@ shared_examples_for 'voteable' do
       end
     end
 
-    it 'rating must equal 3' do
-      expect(voteable.rating).to eq(3)
+    it 'rating must equal 5' do
+      expect(voteable.rating).to eq(5)
     end
   end
 end
