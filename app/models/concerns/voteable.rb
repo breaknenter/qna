@@ -11,7 +11,7 @@ module Voteable
     unless vote
       vote = votes.create(user_id: user.id, value: value)
     else
-      value != vote.value ? vote.destroy : vote.update(value: value)
+      value != vote.value ? vote.destroy : vote.errors.add(:user, :uniqueness, 'you have already voted')
     end
 
     vote
