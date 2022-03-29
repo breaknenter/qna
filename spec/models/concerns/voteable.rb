@@ -19,4 +19,19 @@ shared_examples_for 'voteable' do
       expect { voteable.vote!(user: user, value: 1) }.to change(voteable.votes, :count).from(0).to(1)
     end
   end
+
+  describe '#rating' do
+    let!(:users) { build_list(:user, 4) }
+    votes = [1, 1, -1, 1]
+
+    before do
+      users.each_with_index do |user, num|
+        voteable.vote!(user: user, value: votes[num])
+      end
+    end
+
+    it 'rating must equal 3' do
+      expect(voteable.rating).to eq(3)
+    end
+  end
 end
