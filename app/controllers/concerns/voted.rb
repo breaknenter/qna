@@ -10,6 +10,10 @@ module Voted
     vote = @voteable.vote!(user: current_user, value: 1)
   end
 
+  def vote_down
+    vote = @voteable.vote!(user: current_user, value: -1)
+  end
+
   private
 
   def model_klass
