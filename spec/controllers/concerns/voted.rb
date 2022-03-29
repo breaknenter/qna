@@ -32,4 +32,23 @@ shared_examples_for 'voted' do
       end
     end
   end
+
+  describe 'POST #vote_down' do
+    context 'authenticated user vote down' do
+      before { login(user) }
+
+      let(:vote) do
+        post :vote_down, params: { id: voteable }, format: :json
+      end
+
+      it 'changes votes count' do
+        expect { vote }.to change(voteable.votes, :count).from(0).to(1)
+      end
+
+      it 'returns a 200 OK status' do
+        vote
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
 end
