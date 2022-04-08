@@ -11,11 +11,15 @@ feature 'User can vote for a question' do
       visit question_path(question)
     end
 
-    scenario 'sees counter and links' do
+    scenario 'sees counter and links and set like' do
       within('.votes') do
         expect(page).to have_content '0'
         expect(page).to have_link '+'
         expect(page).to have_link '-'
+
+        click_link '+'
+
+        expect(page).to have_content '1'
       end
     end
   end
