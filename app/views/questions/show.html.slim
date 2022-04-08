@@ -12,6 +12,8 @@
         = image_tag @question.reward.image
         figcaption = @question.reward.name
 
+  = render 'shared/votes', voteable: @question
+
   .question-errors
 
   = form_with model: @question, local: false, class: 'question-edit hidden', html: { id: "question-#{@question.id}" } do |f|
