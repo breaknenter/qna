@@ -1,0 +1,4 @@
+.votes
+  = link_to '+', polymorphic_path(voteable, action: 'vote_up'), remote: true, method: :post, data: { type: :json }
+  span.rating<> = voteable.rating
+  = link_to '-', polymorphic_path(voteable, action: 'vote_down'), remote: true, method: :post, data: { type: :json }

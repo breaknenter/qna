@@ -2,6 +2,8 @@ div class='answer' id="answer-#{answer.id}"
   hr
   p = answer.text
 
+  = render 'shared/votes', voteable: answer
+
   .answer-files
     = render 'shared/files', resource: answer
 
