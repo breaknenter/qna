@@ -17,6 +17,6 @@ class Vote < ApplicationRecord
   private
 
   def self_like
-    errors.add(:user, 'self-like it for xxxx') if voteable&.author_id == user_id
+    errors.add(:user, 'self-like it for xxxx') if voteable && user&.author_of?(voteable)
   end
 end
