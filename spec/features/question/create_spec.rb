@@ -5,9 +5,11 @@ feature 'User can create question', %(
   I, as an authenticated user,
   would like to create a question
 ) do
-  describe 'Authenticated user' do
-    given(:user) { create(:user) }
 
+  given(:user)  { create(:user)  }
+  given(:guest) { create(:guest) }
+
+  describe 'Authenticated user' do
     background do
       sign_in(user)
       visit new_question_path
@@ -64,5 +66,26 @@ feature 'User can create question', %(
     click_link 'Ask question'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
+  end
+
+  scenario 'Question appears on another user page', js: true do
+    Capybara.using_session('user') do
+      sign_in(user)
+      visit new_question_path
+      fill_in 'Title', with: 'Test title'
+      fill_in 'Text',  with: 'Test text'
+    end
+
+    Capybara.using_session('guest') do
+      visit questions_path
+    end
+
+    Capybara.using_session('user') do
+      click_button 'Ask'
+    end
+
+    Capybara.using_session('guest') do
+      expect(page).to have_content 'Test title'
+    end
   end
 end
