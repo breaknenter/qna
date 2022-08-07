@@ -1,6 +1,7 @@
-- if @questions.present?
-  = render @questions
-- else
-  p No questions
+#questions-list
+  - if @questions.present?
+    = render @questions
+  - else
+    p No questions
 
-= link_to 'Ask question', new_question_path
+  = link_to 'Ask question', new_question_path
