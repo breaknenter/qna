@@ -26,6 +26,7 @@ $(document).on('turbolinks:load', function() {
       },
 
       received(data) {
+        $('#questions-list').append(data);
       }
     });
   }
