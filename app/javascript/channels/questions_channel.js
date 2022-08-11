@@ -17,7 +17,6 @@ $(document).on('turbolinks:load', function() {
 
     {
       connected() {
-        this.perform("subscribed");
         console.log("Connected to QuestionsChannel");
       },
 
