@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   include Voted
 
   before_action :authenticate_user!, except: %i[index show]
+  before_action -> { gon.author_id = current_user&.id }, only: :show
   after_action  :publish_question,   only: :create
 
   def index
