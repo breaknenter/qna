@@ -1,7 +1,7 @@
 - if resource.files.attached?
   ul
-  - resource.files.each do |file|
-    li id="file-#{file.id}"
-      p = link_to file.filename.to_s, url_for(file)
-      - if current_user&.author_of?(resource)
-        small = link_to 'delete', file_path(file), method: :delete, remote: true
+    - resource.files.each do |file|
+      li id="file-#{file.id}"
+        p = link_to file.filename.to_s, url_for(file)
+        - if current_user&.author_of?(resource)
+          small = link_to 'delete', file_path(file), method: :delete, remote: true
