@@ -1,8 +1,10 @@
 require 'rails_helper'
 require Rails.root.join 'spec/models/concerns/voteable.rb'
+require Rails.root.join 'spec/models/concerns/commentable.rb'
 
 RSpec.describe Answer, type: :model do
   it_behaves_like 'voteable'
+  it_behaves_like 'commentable'
 
   let(:user)     { create(:user) }
   let(:question) { create(:question, author: user) }
@@ -27,6 +29,7 @@ RSpec.describe Answer, type: :model do
 
     it { should have_many(:links).dependent(:destroy) }
     it { should have_many(:votes).dependent(:destroy) }
+    it { should have_many(:comments).dependent(:destroy) }
 
     it { should accept_nested_attributes_for :links }
   end

@@ -55,10 +55,12 @@ ActiveRecord::Schema.define(version: 2022_08_18_092653) do
 
   create_table "comments", force: :cascade do |t|
     t.text "text", null: false
-    t.string "commentable_type"
-    t.bigint "commentable_id"
+    t.bigint "author_id", null: false
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_comments_on_author_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
   end
 
@@ -121,6 +123,7 @@ ActiveRecord::Schema.define(version: 2022_08_18_092653) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users", column: "author_id"
+  add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "questions", "answers", column: "best_answer_id"
   add_foreign_key "questions", "users", column: "author_id"
   add_foreign_key "rewards", "questions"
