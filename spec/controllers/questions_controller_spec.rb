@@ -1,8 +1,10 @@
 require 'rails_helper'
 require Rails.root.join 'spec/controllers/concerns/voted.rb'
+require Rails.root.join 'spec/controllers/concerns/commented.rb'
 
 RSpec.describe QuestionsController, type: :controller do
   it_behaves_like 'voted'
+  it_behaves_like 'commented'
 
   let(:user) { create(:user) }
 
