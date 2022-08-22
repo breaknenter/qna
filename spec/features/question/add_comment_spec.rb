@@ -12,8 +12,8 @@ feature 'The user can add comment to the question' do
     end
 
     scenario 'add comment' do
-      within('#question-comments') do
-        fill_in 'Text', with: 'Comment text'
+      within('#comment-form') do
+        fill_in 'comment_text', with: 'Comment text'
         click_button 'Comment'
       end
 

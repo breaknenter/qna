@@ -16,6 +16,8 @@ div class='answer' id="answer-#{answer.id}"
 
   div id="answer-comments-#{answer.id}"
     = render 'comments/comments', commentable: answer
+  - if user_signed_in?
+    = render 'comments/form', commentable: answer
 
   - if current_user&.author_of?(answer)
       #answer-actions
