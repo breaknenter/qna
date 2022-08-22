@@ -1,0 +1,9 @@
+p 
+  small Комментарии:
+- if commentable.comments.any?
+  - commentable.comments.each do |comment|
+    p
+      small = comment.text
+
+- if user_signed_in?
+  = render 'comments/form', commentable: commentable

@@ -29,7 +29,7 @@ feature 'User can edit his question' do
         expect(page).not_to have_content  question.text
         expect(page).to     have_content  'Edited title'
         expect(page).to     have_content  'Edited text'
-        expect(page).not_to have_selector 'textarea'
+        expect(page).not_to have_selector '#question_text'
       end
     end
 
@@ -60,7 +60,7 @@ feature 'User can edit his question' do
         expect(page).not_to have_content  question.text
         expect(page).to     have_content  'Edited title'
         expect(page).to     have_content  'Edited text'
-        expect(page).not_to have_selector 'textarea'
+        expect(page).not_to have_selector '#question_text'
         expect(page).to     have_link     'rails_helper.rb'
       end
     end
