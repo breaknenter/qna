@@ -29,4 +29,29 @@ feature 'The user can add comment to the answer' do
       expect(page).not_to have_selector '.answers-list #comment-form'
     end
   end
+
+  scenario 'Comment appears on another user page', js: true do
+    Capybara.using_session('author') do
+      sign_in(author)
+      visit question_path(question)
+
+      within('.answers-list') do
+        fill_in 'comment_text', with: 'Comment text'
+      end
+    end
+
+    Capybara.using_session('user') do
+      visit question_path(question)
+    end
+
+    Capybara.using_session('author') do
+      within('.answers-list') do
+        click_button 'Comment'
+      end
+    end
+
+    Capybara.using_session('user') do
+      expect(page).to have_content 'Comment text'
+    end
+  end
 end
