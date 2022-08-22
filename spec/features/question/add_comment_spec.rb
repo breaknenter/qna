@@ -20,4 +20,12 @@ feature 'The user can add comment to the question' do
       expect(page).to have_content 'Comment text'
     end
   end
+
+  context 'Unauthenticated user', js: true do
+    background { visit question_path(question) }
+
+    scenario 'try add comment' do
+      expect(page).not_to have_selector '#comment-form'
+    end
+  end
 end
