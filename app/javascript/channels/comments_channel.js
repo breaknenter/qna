@@ -24,7 +24,7 @@ $(document).on('turbolinks:load', function() {
             $('#question-comments').append(renderComment(comment));
             console.log(renderComment(comment));
           } else if (comment.commentable_type == 'Answer') {
-            $(`answer-comments-${comment.commentable_id}`).append(renderComment(comment));
+            $(`#answer-comments-${comment.commentable_id}`).append(renderComment(comment));
           }
         }
       });
