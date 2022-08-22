@@ -19,14 +19,24 @@ $(document).on('turbolinks:load', function() {
           console.log("Disconnected from CommentsChannel");
         },
 
-        received(data) {
-          if (gon.authorId != data.answer.author_id) {
-            $('#question-comments').append(renderComment(data));
+        received(comment) {
+          if(comment.commentable_type == 'Question') {
+            $('#question-comments').append(renderComment(comment));
+            console.log(renderComment(comment));
+          } else if (comment.commentable_type == 'Answer') {
+            $(`answer-comments-${comment.commentable_id}`).append(renderComment(comment));
           }
         }
       });
 
-    function renderComment(data) {
+    function renderComment(comment) {
+      let template = `
+      <p>
+        <small>${comment.text}</small>
+      </p>
+      `;
+
+      return template;
     }
   }
 
