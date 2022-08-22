@@ -13,6 +13,8 @@
         figcaption = @question.reward.name
 
   = render 'shared/votes', voteable: @question
+  #question-comments
+    = render 'comments/comments', commentable: @question
 
   .question-errors
 

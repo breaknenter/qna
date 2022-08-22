@@ -1,0 +1,5 @@
+#comment-form
+  = form_with scope: :comment, url: polymorphic_path(commentable, action: :create_comment), local: false    do |f|
+    small = f.label :text, 'Комментировать'
+    p = f.text_area :text
+    p = f.submit 'Comment'
