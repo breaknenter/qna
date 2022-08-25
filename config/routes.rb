@@ -6,7 +6,8 @@ Rails.application.routes.draw do
                sign_up:  :register,
                sign_in:  :login,
                sign_out: :logout
-             }
+             },
+             controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
   concern :voteable do
     member do
