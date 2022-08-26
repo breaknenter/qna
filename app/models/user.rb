@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :votes
   has_many :comments
 
+  def self.find_for_oauth(auth)
+  end
+
   def author_of?(entity)
     self.id == entity.author_id
   end
