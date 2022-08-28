@@ -6,6 +6,8 @@ class CreateAuthorizations < ActiveRecord::Migration[6.1]
 
       t.references :user, null: false
 
+      t.index %i[provider uid], unique: true
+
       t.timestamps
     end
   end
