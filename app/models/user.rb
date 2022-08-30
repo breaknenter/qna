@@ -10,30 +10,6 @@ class User < ApplicationRecord
   has_many :comments, class_name: 'Comment', foreign_key: 'author_id'
   has_many :authorizations
 
-  def self.find_for_oauth(auth)
-    authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
-
-    return authorization.user if authorization
-
-    email = auth.info[:email]
-    user = User.where(email: email).first
-
-    if user
-      user.create_authorization(auth)
-    else
-      password = Devise.friendly_token(10)
-      user = User.create!(
-               email: email,
-               password: password,
-               password_confirmation: password
-               )
-
-      user.create_authorization(auth)
-    end
-
-    user
-  end
-
   def author_of?(entity)
     self.id == entity.author_id
   end
