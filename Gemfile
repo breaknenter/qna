@@ -48,6 +48,9 @@ gem 'omniauth'
 # OAuth for Github
 gem 'omniauth-github'
 
+# OAuth for VK
+gem 'omniauth-vkontakte'
+
 # OmniAuth - Rails CSRF Protection
 gem 'omniauth-rails_csrf_protection'
 
