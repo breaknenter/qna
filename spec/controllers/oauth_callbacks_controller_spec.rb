@@ -46,4 +46,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
       end
     end
   end
+
+  describe 'Vkontakte' do
+  end
 end
