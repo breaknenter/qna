@@ -62,6 +62,8 @@ group :development, :test do
   gem 'rails-controller-testing'
   # Factory Girl
   gem 'factory_bot_rails'
+  # Test your ActionMailer and Mailer messages with Capybara
+  gem 'capybara-email'
 end
 
 group :development do
