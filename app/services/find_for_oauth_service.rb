@@ -20,7 +20,8 @@ class FindForOauthService
       user = User.create!(
                email: email,
                password: password,
-               password_confirmation: password
+               password_confirmation: password,
+               confirmed_at: Time.zone.now
              )
 
       user.create_authorization(auth)
