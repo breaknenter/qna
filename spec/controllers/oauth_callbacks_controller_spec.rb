@@ -45,6 +45,18 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
+
+    context 'no email' do
+      before do
+        @request.env['omniauth.auth'].info.email = nil
+
+        get :github
+      end
+
+      it 'redirects to new_email_path' do
+        expect(response).to redirect_to(new_email_path)
+      end
+    end
   end
 
   describe 'Vkontakte' do
@@ -85,6 +97,18 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
       it 'redirects to root path' do
         expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'no email' do
+      before do
+        @request.env['omniauth.auth'].info.email = nil
+
+        get :vkontakte
+      end
+
+      it 'redirects to new_email_path' do
+        expect(response).to redirect_to(new_email_path)
       end
     end
   end

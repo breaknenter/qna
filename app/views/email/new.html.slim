@@ -1,0 +1,6 @@
+h2 Введите email
+
+= form_with url: email_path, method: :post do |f|
+  = f.label :email
+  = f.email_field :email
+  = f.submit 'Отправить'
