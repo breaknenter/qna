@@ -30,4 +30,6 @@ Rails.application.routes.draw do
   resources :links, only: :destroy
 
   resources :rewards, only: :index
+
+  resource :email, only: %i[new create], controller: :email
 end

@@ -10,15 +10,20 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def oauth_with(provider)
-    @user = FindForOauthService.new(request.env['omniauth.auth']).call
+    if request.env['omniauth.auth'].info[:email].nil?
+      redirect_to new_email_path
+      return
+    end
 
-    if @user&.persisted?
-      sign_in_and_redirect(@user, event: :authentication)
+    user = FindForOauthService.new(request.env['omniauth.auth']).call
+
+    if user&.confirmed?
+      sign_in_and_redirect(user, event: :authentication)
       set_flash_message(:notice, :success, kind: provider) if is_navigational_format?
     else
       redirect_to root_path, alert: 'Something went wrong'
     end
 
-    @user
+    user
   end
 end

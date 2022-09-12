@@ -279,6 +279,9 @@ Devise.setup do |config|
   config.omniauth :vkontakte,
                   Rails.application.credentials[Rails.env.to_sym][:vk][:app_id],
                   Rails.application.credentials[Rails.env.to_sym][:vk][:app_secret],
+                  client_options: {
+                    auth_scheme: 'request_body'
+                  },
                   scope: 'email'
 
   # ==> Warden configuration
