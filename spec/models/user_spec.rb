@@ -27,6 +27,14 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:password) }
+    it { should validate_inclusion_of(:admin).in_array([true, false]) }
+  end
+
+  describe '#admin!' do
+    let!(:user) { create(:user) }
+    before { user.admin! }
+
+    it { expect(user).to be_admin }
   end
 
   describe '#author_of?' do
