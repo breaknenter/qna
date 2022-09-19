@@ -10,6 +10,12 @@ class User < ApplicationRecord
   has_many :comments, class_name: 'Comment', foreign_key: 'author_id'
   has_many :authorizations
 
+  validates :admin, inclusion: { in: [true, false] }
+
+  def admin!
+    update!(admin: true)
+  end
+
   def author_of?(entity)
     self.id == entity.author_id
   end
