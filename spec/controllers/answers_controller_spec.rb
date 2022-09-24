@@ -70,10 +70,10 @@ RSpec.describe AnswersController, type: :controller do
             .to_not change(Answer, :count)
         end
 
-        it 'redirect to questions#show' do
+        it 'redirect to root path' do
           delete :destroy, params: { question_id: question, id: answer }, format: :js
 
-          expect(response).to render_template :destroy
+          expect(response).to redirect_to root_path
         end
       end
   end
@@ -147,7 +147,7 @@ RSpec.describe AnswersController, type: :controller do
         question.reload
 
         expect(answer).to_not be_best
-        expect(response).to render_template :best
+        expect(response).to redirect_to root_path
       end
     end
   end

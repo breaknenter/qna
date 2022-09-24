@@ -3,7 +3,10 @@ class AnswersController < ApplicationController
   include Commented
 
   before_action :authenticate_user!
+  before_action :answer, only: %i[update destroy best]
   after_action  :publish_answer, only: :create
+
+  authorize_resource
 
   def create
     @answer = question.answers.new(answer_params)
@@ -12,8 +15,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-    return unless current_user.author_of?(answer)
-
     if answer.update(answer_params.reject { |key| key['files'] })
       if answer_params[:files].present?
         answer_params[:files].each { |file| answer.files.attach(file) }
@@ -24,11 +25,11 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    answer.destroy if current_user.author_of?(answer)
+    answer.destroy
   end
 
   def best
-    answer.best! if current_user.author_of?(answer.question)
+    answer.best!
 
     @answer = answer
   end

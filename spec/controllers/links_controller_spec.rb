@@ -35,10 +35,20 @@ RSpec.describe LinksController, type: :controller do
         expect { delete_link }.to_not change(question.links, :count)
       end
 
-      it 'render :destroy' do
+      it 'redirect to root url' do
+        expect(delete_link).to redirect_to root_url
+      end
+    end
+
+    context 'user is guest' do
+      it 'not delete link' do
+        expect { delete_link }.to_not change(question.links, :count)
+      end
+
+      it '401: unauthorized' do
         delete_link
 
-        expect(response).to render_template :destroy
+        expect(response.status).to eq 401
       end
     end
   end

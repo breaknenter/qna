@@ -105,8 +105,8 @@ RSpec.describe Ability do
       end
 
       context '#best!' do
-        it { should     be_able_to :best!, user_answer }
-        it { should_not be_able_to :best!, other_answer }
+        it { should     be_able_to :best, user_answer }
+        it { should_not be_able_to :best, other_answer }
       end
     end
 

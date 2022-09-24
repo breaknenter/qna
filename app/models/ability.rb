@@ -40,7 +40,7 @@ class Ability
       user.author_of?(link.linkable)
     end
 
-    can :best!, Answer do |answer|
+    can :best, Answer do |answer|
       user.author_of?(answer.question)
     end
 
