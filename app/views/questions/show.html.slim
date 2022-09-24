@@ -37,8 +37,9 @@
 
     = f.submit 'save'
 
-  - if current_user&.author_of?(@question)
+  - if can? :update, @question
     = link_to 'edit', '#', class: 'question-edit-link', data: { question_id: @question.id }
+  - if can? :destroy, @question
     = link_to 'delete', question_path(@question),
                         method: :delete,
                         data: { confirm: 'Delete question?' }
