@@ -3,8 +3,11 @@ class QuestionsController < ApplicationController
   include Commented
 
   before_action :authenticate_user!, except: %i[index show]
+  before_action :question, only: %i[update destroy]
   before_action -> { gon.author_id = current_user&.id }, only: :show
   after_action  :publish_question,   only: :create
+
+  authorize_resource
 
   def index
     @questions = Question.all
@@ -36,8 +39,6 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    return unless current_user.author_of?(question)
-
     if question.update(question_params.reject { |key| key['files'] })
       if question_params[:files].present?
         question_params[:files].each { |file| question.files.attach(file) }
@@ -46,12 +47,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(question)
-      question.destroy
-      redirect_to questions_path, notice: 'Your question delete'
-    else
-      redirect_to question, alert: 'You cannot delete someone else question'
-    end
+    question.destroy
+    redirect_to questions_path, notice: 'Your question delete'
   end
 
   private

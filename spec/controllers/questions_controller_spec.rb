@@ -102,9 +102,9 @@ RSpec.describe QuestionsController, type: :controller do
     let(:author)    { create(:user) }
     let!(:question) { create(:question, author: author) }
 
-    before { login(author) }
-
     context 'author' do
+      before { login(author) }
+
       it 'delete question' do
         expect { delete :destroy, params: { id: question } }
           .to change(Question, :count).by(-1)
@@ -118,17 +118,19 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'not author' do
-      before { login(user) }
+      let!(:not_author) { create(:user) }
+
+      before { login(not_author) }
 
       it 'delete question' do
         expect { delete :destroy, params: { id: question } }
           .to_not change(Question, :count)
       end
 
-      it 'redirect to questions#show' do
+      it 'redirect to root path' do
         delete :destroy, params: { id: question }
 
-        expect(response).to redirect_to question
+        expect(response).to redirect_to root_path
       end
     end
   end

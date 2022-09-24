@@ -4,8 +4,9 @@ class FilesController < ApplicationController
   helper_method :file
 
   def destroy
-    # record -- связанная модель к которой прикреплён файл
-    file.purge if current_user.author_of?(file.record)
+    authorize! :destroy, file
+
+    file.purge
   end
 
   private
