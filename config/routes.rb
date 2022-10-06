@@ -34,4 +34,12 @@ Rails.application.routes.draw do
   resources :rewards, only: :index
 
   resource :email, only: %i[new create], controller: :email
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles, only: :index do
+        get :me, on: :collection
+      end
+    end
+  end
 end
