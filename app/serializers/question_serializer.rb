@@ -1,11 +1,13 @@
 class QuestionSerializer < ActiveModel::Serializer
-  attributes :id, :title, :short_title, :text, :created_at, :updated_at
+  attributes :id, :title, :text, :links, :files
 
-  belongs_to :author
+  has_many :comments, if: -> { object.comments.present? }
 
-  has_many :answers
-
-  def short_title
-    object.title.truncate(7)
+  def files
+    object.files.map do |file|
+      { 'id'   => file.id,
+        'name' => file.filename.to_s,
+        'url'  => file.url }
+    end
   end
 end
