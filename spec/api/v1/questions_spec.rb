@@ -26,9 +26,7 @@ describe 'Questions API', type: :request do
             headers: headers
       end
 
-      it 'returns 200 status' do
-        expect(response).to be_successful
-      end
+      it_behaves_like 'Status be_successful'
 
       it 'returns list of questions' do
         expect(json['questions'].size).to eq 2
