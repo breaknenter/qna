@@ -67,7 +67,7 @@ describe 'Questions API', type: :request do
     end
   end
 
-  context '/api/v1/questions/:question_id' do
+  describe '/api/v1/questions/:question_id' do
     let!(:question) { create(:question, :with_file) }
     let(:question_id) { question.id }
     let!(:comments) { create_list(:comment, 4, commentable: question, author: author) }
@@ -125,6 +125,40 @@ describe 'Questions API', type: :request do
           let(:resource) { question_response['comments'] }
           let(:list_size) { 4 }
         end
+      end
+    end
+  end
+
+  describe '/api/v1/questions/:question_id/answers' do
+    let!(:question) { create(:question) }
+    let(:question_id) { question.id }
+    let!(:answers) { create_list(:answer, 4, question: question, author: author) }
+    let(:answer) { answers.first }
+    let(:answers_response) { json['answers'] }
+    let(:api_path) { "/api/v1/questions/#{question_id}/answers" }
+
+    it_behaves_like 'API Authorizable' do
+      let(:method) { :get }
+    end
+
+    describe 'GET' do
+      before do
+        get api_path,
+            params: { access_token: access_token },
+            headers: headers
+      end
+
+      it_behaves_like 'Status be_successful'
+
+      it_behaves_like 'API List' do
+        let(:resource) { answers_response }
+        let(:list_size) { 4 }
+      end
+
+      it_behaves_like 'Returns all public fields' do
+        let(:attributes) { %w[id author_id text created_at updated_at] }
+        let(:resource) { answers_response.first }
+        let(:object) { answer }
       end
     end
   end
