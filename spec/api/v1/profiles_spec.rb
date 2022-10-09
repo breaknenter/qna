@@ -26,8 +26,9 @@ describe 'Profiles API', type: :request do
       it_behaves_like 'Status be_successful'
 
       it_behaves_like 'Returns all public fields' do
+        let(:attributes) { %w[id email admin] }
         let(:resource) { json['user'] }
-        let(:user) { me }
+        let(:object) { me }
       end
 
       it_behaves_like 'Does not return private fields'
@@ -65,8 +66,9 @@ describe 'Profiles API', type: :request do
       end
 
       it_behaves_like 'Returns all public fields' do
+        let(:attributes) { %w[id email admin] }
         let(:resource) { json['users'].last }
-        let(:user) { users.last }
+        let(:object) { users.last }
       end
 
       it_behaves_like 'Does not return private fields'
