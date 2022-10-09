@@ -1,5 +1,5 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
-  before_action :question, only: %i[show update destroy]
+  before_action :question, only: %i[show update destroy answers]
 
   def index
     questions = Question.all
@@ -9,6 +9,10 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def show
     render json: question, serializer: QuestionSerializer
+  end
+
+  def answers
+    render json: question.answers
   end
 
   private
