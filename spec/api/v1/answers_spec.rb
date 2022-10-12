@@ -9,6 +9,7 @@ describe 'Answers API', type: :request do
   let!(:user) { create(:user) }
   let(:access_token) { create(:access_token, resource_owner_id: user.id).token }
   let!(:question) { create(:question) }
+  let(:question_id) { question.id }
   let!(:answer) { create(:answer, :with_file, question: question, author: user) }
   let(:answer_id) { answer.id }
 
@@ -68,6 +69,46 @@ describe 'Answers API', type: :request do
         it_behaves_like 'API List' do
           let(:resource) { answer_response['comments'] }
           let(:list_size) { 4 }
+        end
+      end
+    end
+
+    describe 'POST' do
+      let(:api_path) { "/api/v1/questions/#{question_id}/answers" }
+
+      context 'with valid attributes' do
+        it '201 status' do
+          post api_path, params: { access_token: access_token,
+                                   headers: headers,
+                                   answer: { text: 'Answer text' } }
+
+          expect(response).to have_http_status(201)
+        end
+
+        it 'create a new answer' do
+          expect do
+            post api_path, params: { access_token: access_token,
+                                     headers: headers,
+                                     answer: { text: 'Answer text' } }
+          end.to change(question.answers, :count).by(1)
+        end
+      end
+
+      context 'with not valid attributes' do
+        it '422 status' do
+          post api_path, params: { access_token: access_token,
+                                   headers: headers,
+                                   answer: { text: '' } }
+
+          expect(response).to have_http_status(422)
+        end
+
+        it 'dont create a new answer' do
+          expect do
+            post api_path, params: { access_token: access_token,
+                                     headers: headers,
+                                     answer: { text: '' } }
+          end.to_not change(question.answers, :count)
         end
       end
     end
