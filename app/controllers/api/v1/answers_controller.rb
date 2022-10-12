@@ -13,6 +13,14 @@ class Api::V1::AnswersController < Api::V1::BaseController
     end
   end
 
+  def update
+    if @answer.update(answer_params)
+      render json: @answer
+    else
+      render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def show
     render json: @answer
   end

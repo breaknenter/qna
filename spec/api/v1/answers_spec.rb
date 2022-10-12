@@ -76,6 +76,11 @@ describe 'Answers API', type: :request do
     describe 'POST' do
       let(:api_path) { "/api/v1/questions/#{question_id}/answers" }
 
+      it_behaves_like 'API Authorizable' do
+        let(:headers) { { 'ACCEPT' => 'application/json' } }
+        let(:method) { :post }
+      end
+
       context 'with valid attributes' do
         it '201 status' do
           post api_path, params: { access_token: access_token,
@@ -110,6 +115,34 @@ describe 'Answers API', type: :request do
                                      answer: { text: '' } }
           end.to_not change(question.answers, :count)
         end
+      end
+    end
+
+    describe 'PATCH' do
+      let(:api_path) { "/api/v1/answers/#{answer_id}" }
+      let(:edited_answer_text) { 'Edited answer text' }
+
+      it_behaves_like 'API Authorizable' do
+        let(:headers) { { 'ACCEPT' => 'application/json' } }
+        let(:method) { :patch }
+      end
+
+      it '200 status' do
+        patch api_path, params: { access_token: access_token,
+                                  headers: headers,
+                                  answer: { text: edited_answer_text } }
+
+        expect(response).to be_successful
+      end
+
+      it 'change answer text' do
+        patch api_path, params: { access_token: access_token,
+                                  headers: headers,
+                                  answer: { text: edited_answer_text } }
+
+        answer.reload
+
+        expect(answer.text).to eq edited_answer_text
       end
     end
   end
