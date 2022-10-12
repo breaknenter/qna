@@ -43,6 +43,8 @@ Rails.application.routes.draw do
 
       resources :questions, only: %i[index show update destroy] do
         get :answers, on: :member
+
+        resources :answers, shallow: true, only: %i[create update show destroy]
       end
     end
   end
