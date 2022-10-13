@@ -25,6 +25,12 @@ class Api::V1::AnswersController < Api::V1::BaseController
     render json: @answer
   end
 
+  def destroy
+    @answer.destroy
+
+    render json: { message: 'Answer deleted' }
+  end
+
   private
 
   def set_answer
