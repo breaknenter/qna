@@ -67,6 +67,53 @@ describe 'Questions API', type: :request do
     end
   end
 
+  describe 'POST /api/v1/questions' do
+    let(:api_path) { '/api/v1/questions' }
+
+    it_behaves_like 'API Authorizable' do
+      let(:headers) { { 'ACCEPT' => 'application/json' } }
+      let(:method) { :post }
+    end
+
+    context 'with valid attributes' do
+      let(:question_post) do
+        post api_path, params: { access_token: access_token,
+                                 headers: headers,
+                                 question: { title: 'Question title',
+                                             text:  'Question text' } }
+      end
+
+      it '201 status' do
+        question_post
+
+        expect(response).to have_http_status(201)
+      end
+
+      it 'create a new question' do
+        expect{ question_post }.to change(Question, :count).by(1)
+      end
+    end
+
+    context 'with not valid attributes' do
+      let(:question_post) do
+        post api_path, params: { access_token: access_token,
+                                 headers: headers,
+                                 question: { title: '',
+                                             text:  '' } }
+      end
+
+      it '422 status' do
+        question_post
+
+        expect(response).to have_http_status(422)
+      end
+
+      it 'dont create a new question' do
+        expect{ question_post }.to_not change(Question, :count)
+      end
+    end
+  end
+
   describe '/api/v1/questions/:question_id' do
     let!(:question) { create(:question, :with_file) }
     let(:question_id) { question.id }
