@@ -29,6 +29,12 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     render json: @question, serializer: QuestionSerializer
   end
 
+  def destroy
+    @question.destroy
+
+    render json: { message: 'Question deleted' }
+  end
+
   def answers
     render json: @question.answers
   end
