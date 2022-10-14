@@ -195,6 +195,29 @@ describe 'Questions API', type: :request do
         expect(question.text).to eq 'Edited question text'
       end
     end
+
+    describe 'DELETE' do
+      let(:headers) { { 'ACCEPT' => 'application/json' } }
+      let(:delete_question) do
+        delete api_path, params: { access_token: access_token },
+                                   headers: headers
+      end
+
+      it_behaves_like 'API Authorizable' do
+        let(:headers) { { 'ACCEPT' => 'application/json' } }
+        let(:method) { :delete }
+      end
+
+      it '200 status' do
+        delete_question
+
+        expect(response).to have_http_status(200)
+      end
+
+      it 'delete question' do
+        expect{ delete_question }.to change(Question, :count).by(-1)
+      end
+    end
   end
 
   describe '/api/v1/questions/:question_id/answers' do
