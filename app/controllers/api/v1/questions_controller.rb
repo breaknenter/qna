@@ -17,18 +17,26 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     end
   end
 
+  def update
+    if @question.update(question_params)
+      render json: @question
+    else
+      render json: { errors: @question.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def show
-    render json: question, serializer: QuestionSerializer
+    render json: @question, serializer: QuestionSerializer
   end
 
   def answers
-    render json: question.answers
+    render json: @question.answers
   end
 
   private
 
   def question
-    Question.find(params[:id])
+    @question = Question.find(params[:id])
   end
 
   def question_params

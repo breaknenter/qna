@@ -174,6 +174,27 @@ describe 'Questions API', type: :request do
         end
       end
     end
+
+    describe 'PATCH' do
+      before do
+        patch api_path, params: { access_token: access_token,
+                                  headers: headers,
+                                  question: { title: 'Edited title text',
+                                              text: 'Edited question text' } }
+      end
+
+      it_behaves_like 'Status be_successful'
+
+      it '200 status' do
+        expect(response).to be_successful
+      end
+
+      it 'change question text' do
+        question.reload
+
+        expect(question.text).to eq 'Edited question text'
+      end
+    end
   end
 
   describe '/api/v1/questions/:question_id/answers' do
