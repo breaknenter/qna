@@ -68,6 +68,10 @@ RSpec.describe Ability do
         it { should_not be_able_to :destroy, other_question }
       end
 
+      context '#answers' do
+        it { should be_able_to :answers, user_question }
+      end
+
       context '#vote_up' do
         it { should     be_able_to :vote_up, other_question }
         it { should_not be_able_to :vote_up, user_question }
@@ -140,6 +144,16 @@ RSpec.describe Ability do
 
       context '#create_comment for answer' do
         it { should be_able_to :create_comment, Answer }
+      end
+    end
+
+    context 'User' do
+      context '#index' do
+        it { should be_able_to :index, user }
+      end
+
+      context '#me' do
+        it { should be_able_to :me, user }
       end
     end
   end

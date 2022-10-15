@@ -115,7 +115,7 @@ describe 'Questions API', type: :request do
   end
 
   describe '/api/v1/questions/:question_id' do
-    let!(:question) { create(:question, :with_file) }
+    let!(:question) { create(:question, :with_file, author: author) }
     let(:question_id) { question.id }
     let!(:comments) { create_list(:comment, 4, commentable: question, author: author) }
     let!(:links) { create_list(:link, 4, linkable: question) }
