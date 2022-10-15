@@ -31,6 +31,7 @@ class Ability
     can :create, [Question, Answer, Comment]
     can :create_comment, [Question, Answer]
     can [:update, :destroy], [Question, Answer], author_id: user.id
+    can :answers, Question
 
     can :destroy, ActiveStorage::Attachment do |attachment|
       user.author_of?(attachment.record)
@@ -47,5 +48,7 @@ class Ability
     can [:vote_up, :vote_down], [Question, Answer] do |voteable|
       !user.author_of?(voteable)
     end
+
+    can [:me, :index], User, { id: user.id }
   end
 end

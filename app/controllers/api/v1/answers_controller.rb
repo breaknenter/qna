@@ -2,6 +2,8 @@ class Api::V1::AnswersController < Api::V1::BaseController
   before_action :set_answer, only: %i[create update show destroy]
   before_action :set_question, only: :create
 
+  authorize_resource
+
   def create
     @answer = current_resource_owner.answers.build(answer_params)
     @answer.question = @question
