@@ -36,7 +36,7 @@ RSpec.describe LinksController, type: :controller do
       end
 
       it 'redirect to root url' do
-        expect(delete_link).to redirect_to root_url
+        expect(delete_link).to have_http_status(:forbidden)
       end
     end
 
