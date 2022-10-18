@@ -33,7 +33,7 @@ RSpec.describe FilesController, type: :controller do
       end
 
       it 'redirect to root url' do
-        expect(delete_file).to redirect_to root_url
+        expect(delete_file).to have_http_status(:forbidden)
       end
     end
 

@@ -12,4 +12,10 @@ class Api::V1::BaseController < ApplicationController
   def current_ability
     @ability ||= Ability.new(current_resource_owner)
   end
+
+  private
+
+  def doorkeeper_unauthorized_render_options(error: nil)
+    { json: { error: 'Not authorized' } }
+  end
 end
