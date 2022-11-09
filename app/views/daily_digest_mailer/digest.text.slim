@@ -1,0 +1,6 @@
+| QnA daily digest:
+= "\n\n"
+- for question in @questions
+  = question.created_at.strftime('%H:%M - ')
+  = question.title
+  = "\n"

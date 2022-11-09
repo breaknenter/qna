@@ -1,0 +1,7 @@
+h1 QnA daily digest
+
+ul
+  - for question in @questions
+    li
+      = question.created_at.strftime('%H:%M - ')
+      = link_to question.title, question_url(question)
