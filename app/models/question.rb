@@ -5,8 +5,11 @@ class Question < ApplicationRecord
   belongs_to :author,      class_name: 'User',   foreign_key: 'author_id'
   belongs_to :best_answer, class_name: 'Answer', foreign_key: 'best_answer_id', dependent: :destroy, optional: true
 
-  has_many :answers, dependent: :destroy
-  has_many :links,   dependent: :destroy, as: :linkable
+  has_many :answers,     dependent: :destroy
+  has_many :links,       dependent: :destroy, as: :linkable
+  has_many :subscribes,  dependent: :destroy
+  has_many :subscribers, through:   :subscribes
+
   has_one  :reward,  dependent: :destroy
 
   has_many_attached :files
