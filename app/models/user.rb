@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :votes
   has_many :comments, class_name: 'Comment', foreign_key: 'author_id'
   has_many :authorizations
+  has_many :subscriptions, dependent: :destroy
 
   validates :admin, inclusion: { in: [true, false] }
 
