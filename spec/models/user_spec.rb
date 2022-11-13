@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
                .with_foreign_key('author_id')
     end
     it { should have_many(:authorizations) }
-    it { should have_many(:subscriptions).dependent(:destroy) }
+    it { should have_many(:subscriptions).with_foreign_key('subscriber_id').dependent(:destroy) }
   end
 
   describe 'validations' do
