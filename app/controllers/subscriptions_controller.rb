@@ -2,6 +2,8 @@ class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: :create
 
+  authorize_resource
+
   def create
     @subscription = @question.subscriptions.create(subscriber: current_user)
 
