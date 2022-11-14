@@ -21,10 +21,10 @@ RSpec.describe Ability do
 
   describe 'for user' do
     let(:user)       { create(:user) }
-    let(:other_user) { build(:user) }
+    let(:other_user) { create(:user) }
 
-    let(:user_question)  { build(:question, author: user) }
-    let(:other_question) { build(:question, author: other_user) }
+    let(:user_question)  { create(:question, author: user) }
+    let(:other_question) { create(:question, author: other_user) }
 
     let(:user_answer)  { build(:answer, question: user_question, author: user) }
     let(:other_answer) { build(:answer, question: other_question, author: other_user) }
@@ -46,6 +46,10 @@ RSpec.describe Ability do
 
     let(:other_answer_attachment) do
       create(:answer, :with_file, question: other_question, author: other_user).files.first
+    end
+
+    let(:other_user_question_subscription) do
+      other_question.subscriptions.find_by!(subscriber: other_user)
     end
 
     context 'for all' do
@@ -144,6 +148,17 @@ RSpec.describe Ability do
 
       context '#create_comment for answer' do
         it { should be_able_to :create_comment, Answer }
+      end
+    end
+
+    describe 'Subscription' do
+      describe '#create' do
+        it { should be_able_to :create, Subscription }
+      end
+
+      describe '#destroy' do
+        it { should     be_able_to :destroy, Subscription }
+        it { should_not be_able_to :destroy, other_user_question_subscription }
       end
     end
 
