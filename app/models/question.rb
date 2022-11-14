@@ -28,10 +28,4 @@ class Question < ApplicationRecord
   def answers_ex_best
     best_answer_id ? answers.where.not(id: best_answer_id) : answers
   end
-
-  # private
-
-  # def subscribe_author
-  #   subscriptions.create(subscriber_id: author_id)
-  # end
 end

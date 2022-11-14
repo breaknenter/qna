@@ -26,6 +26,8 @@ class QuestionsController < ApplicationController
     build_links
 
     question
+
+    @subscription = @question.subscriptions.find_by(subscriber: current_user) if current_user
   end
 
   def create
