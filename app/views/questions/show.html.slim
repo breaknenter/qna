@@ -2,6 +2,9 @@
   h2#question-title = @question.title
   p#question-text = @question.text
 
+  - if user_signed_in?
+      = render 'subscriptions/subscription'
+
   #question-files
     = render 'shared/files', resource: @question
 

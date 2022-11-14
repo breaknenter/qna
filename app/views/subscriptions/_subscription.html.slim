@@ -1,0 +1,5 @@
+.subscription
+  - if @subscription&.persisted?
+    = button_to 'Отписаться', subscription_path(@subscription), method: :delete, remote: true
+  - else
+    = button_to 'Подписаться', question_subscriptions_path(@question), method: :post, remote: true
