@@ -15,6 +15,11 @@ class Answer < ApplicationRecord
 
   validates :text, presence: true
 
+  delegate :subscriptions, to: :question, prefix: true
+
+  after_create_commit :notify_about_new_answer,
+                      if: -> { question_subscriptions.exists? }
+
   def best!
     transaction do
       question.update!(best_answer_id: id)
@@ -24,5 +29,11 @@ class Answer < ApplicationRecord
 
   def best?
     question.best_answer_id == id
+  end
+
+  private
+
+  def notify_about_new_answer
+    NewAnswerNotificationJob.perform_later(self)
   end
 end
