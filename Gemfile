@@ -111,6 +111,8 @@ group :test do
   gem 'shoulda-matchers', '~> 5.0'
   # Launchy: save_and_open_page
   gem 'launchy'
+  # Strategies for cleaning databases
+  gem 'database_cleaner-active_record'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
