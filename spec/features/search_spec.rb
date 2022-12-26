@@ -12,7 +12,7 @@ feature 'Search with Sphinx' do
     visit root_path
   end
 
-  scenario 'Search with no matches', sphinx: true do
+  scenario 'with no matches', sphinx: true do
     search(query: 'No matches')
 
     ThinkingSphinx::Test.run do
@@ -22,7 +22,7 @@ feature 'Search with Sphinx' do
     end
   end
 
-  scenario 'Search question everywhere', sphinx: true do
+  scenario 'by question title everywhere', sphinx: true do
     search(query: question.title)
 
     ThinkingSphinx::Test.run do
@@ -32,7 +32,7 @@ feature 'Search with Sphinx' do
     end
   end
 
-  scenario 'Search by questions', sphinx: true do
+  scenario 'by questions', sphinx: true do
     search(query: question.title, by: 'question')
 
     ThinkingSphinx::Test.run do
@@ -42,7 +42,7 @@ feature 'Search with Sphinx' do
     end
   end
 
-  scenario 'Search by answers', sphinx: true do
+  scenario 'by answers', sphinx: true do
     search(query: answer.text, by: 'answer')
 
     ThinkingSphinx::Test.run do
@@ -52,7 +52,7 @@ feature 'Search with Sphinx' do
     end
   end
 
-  scenario 'Search by comments', sphinx: true do
+  scenario 'by comments', sphinx: true do
     search(query: comment.text, by: 'comment')
 
     ThinkingSphinx::Test.run do
@@ -62,7 +62,7 @@ feature 'Search with Sphinx' do
     end
   end
 
-  scenario 'Search by users', sphinx: true do
+  scenario 'by user email', sphinx: true do
     search(query: author.email, by: 'user')
 
     ThinkingSphinx::Test.run do
