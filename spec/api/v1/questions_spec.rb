@@ -50,7 +50,7 @@ describe 'Questions API', type: :request do
       end
 
       describe 'answers' do
-        let(:answer) { answers.first }
+        let(:answer) { answers.last }
         let(:answer_response) { question_response['answers'].first }
 
         it_behaves_like 'API List' do
@@ -248,7 +248,7 @@ describe 'Questions API', type: :request do
 
       it_behaves_like 'Returns all public fields' do
         let(:attributes) { %w[id author_id text created_at updated_at] }
-        let(:resource) { answers_response.first }
+        let(:resource) { answers_response.last }
         let(:object) { answer }
       end
     end
