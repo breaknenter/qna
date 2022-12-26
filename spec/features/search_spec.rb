@@ -1,6 +1,6 @@
 require 'sphinx_helper'
 
-feature 'Search with Sphinx' do
+feature 'Search with Sphinx', sphinx: true do
   given!(:author) { create(:user) }
   given!(:question) { create(:question, title: 'Question title', author: author) }
   given!(:answer) { create(:answer, text: 'Answer text', question: question, author: author) }
@@ -12,63 +12,51 @@ feature 'Search with Sphinx' do
     visit root_path
   end
 
-  scenario 'with no matches', sphinx: true do
+  scenario 'with no matches' do
     search(query: 'No matches')
 
-    ThinkingSphinx::Test.run do
-      within('.results') do
-        expect(page).to have_content 'Ничего не найдено :('
-      end
+    within('.results') do
+      expect(page).to have_content 'Ничего не найдено :('
     end
   end
 
-  scenario 'by question title everywhere', sphinx: true do
+  scenario 'by question title everywhere' do
     search(query: question.title)
 
-    ThinkingSphinx::Test.run do
-      within('.results') do
-        expect(page).to have_content question.title
-      end
+    within('.results') do
+      expect(page).to have_content question.title
     end
   end
 
-  scenario 'by questions', sphinx: true do
+  scenario 'by questions' do
     search(query: question.title, by: 'question')
 
-    ThinkingSphinx::Test.run do
-      within('.results') do
-        expect(page).to have_content question.title
-      end
+    within('.results') do
+      expect(page).to have_content question.title
     end
   end
 
-  scenario 'by answers', sphinx: true do
+  scenario 'by answers' do
     search(query: answer.text, by: 'answer')
 
-    ThinkingSphinx::Test.run do
-      within('.results') do
-        expect(page).to have_content answer.text
-      end
+    within('.results') do
+      expect(page).to have_content answer.text
     end
   end
 
-  scenario 'by comments', sphinx: true do
+  scenario 'by comments' do
     search(query: comment.text, by: 'comment')
 
-    ThinkingSphinx::Test.run do
-      within('.results') do
-        expect(page).to have_content comment.text
-      end
+    within('.results') do
+      expect(page).to have_content comment.text
     end
   end
 
-  scenario 'by user email', sphinx: true do
+  scenario 'by user email' do
     search(query: author.email, by: 'user')
 
-    ThinkingSphinx::Test.run do
-      within('.results') do
-        expect(page).to have_content user.email
-      end
+    within('.results') do
+      expect(page).to have_content author.email
     end
   end
 
