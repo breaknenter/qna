@@ -1,7 +1,8 @@
 class SearchController < ApplicationController
-  skip_authorization_check
 
   def index
+    authorize! :index, SearchController
+
     @result = SearchService.call(search_params)
   end
 
