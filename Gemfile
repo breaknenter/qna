@@ -99,6 +99,12 @@ group :development do
   gem 'spring'
   # Preview mail in the browser instead of sending
   gem 'letter_opener'
+  # Capistrano gems
+  gem 'capistrano',           require: false
+  gem 'capistrano-bundler',   require: false
+  gem 'capistrano-rbenv',     require: false
+  gem 'capistrano-rails',     require: false
+  gem 'capistrano-passenger', require: false
 end
 
 group :test do
