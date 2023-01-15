@@ -76,6 +76,9 @@ gem 'whenever', require: false
 gem 'thinking-sphinx'
 gem 'mysql2', '~> 0.5'
 
+# Package libv8 from Node
+gem 'libv8-node', '16.10.0.0'
+
 # Minimal embedded V8
 gem 'mini_racer'
 

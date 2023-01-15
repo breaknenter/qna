@@ -414,6 +414,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   launchy
   letter_opener
+  libv8-node (= 16.10.0.0)
   listen (~> 3.3)
   mini_racer
   mysql2 (~> 0.5)
