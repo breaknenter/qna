@@ -2,8 +2,9 @@
 lock '3.17.1'
 
 set :application, 'QnA'
-set :repo_url,    'https://github.com/breaknenter/qna.git'
-set :deploy_to,   'home/deployer/qna'
+set :repo_url,    'git@github.com:breaknenter/qna.git'
+set :branch,      'main'
+set :deploy_to,   '/home/deployer/qna'
 set :deploy_user, 'deployer'
 
 set :linked_files, %w[config/database.yml config/master.key]
