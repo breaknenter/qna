@@ -10,3 +10,5 @@ set :pty,         false
 
 set :linked_files, %w[config/database.yml config/master.key]
 set :linked_dirs,  %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system storage]
+
+after 'deploy:publishing', 'unicorn:restart'
