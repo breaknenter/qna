@@ -1,61 +1,62 @@
-.question data-question-id = @question.id
-  h2#question-title = @question.title
-  p#question-text = @question.text
+- cache @question do
+  .question data-question-id = @question.id
+    h2#question-title = @question.title
+    p#question-text = @question.text
+
+    - if user_signed_in?
+        = render 'subscriptions/subscription'
+
+    #question-files
+      = render 'shared/files', resource: @question
+
+    #reward
+      - if @question.reward
+        p Reward:
+        figure
+          = image_tag @question.reward.image
+          figcaption = @question.reward.name
+
+    = render 'shared/votes', voteable: @question
+    #question-comments
+      = render 'comments/comments', commentable: @question
+    - if user_signed_in?
+      = render 'comments/form', commentable: @question
+
+    .question-errors
+
+    = form_with model: @question, local: false, class: 'question-edit hidden', html: { id: "question-#{@question.id}" } do |f|
+      = f.label      :title
+      = f.text_field :title
+
+      = f.label      :text
+      = f.text_area  :text
+
+      = f.label :files
+      = f.file_field :files, multiple: true, direct_upload: true
+
+      = f.fields_for :links do |link|
+        p = render 'shared/link_fields', f: link
+
+      p = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
+
+      = f.submit 'save'
+
+    - if can? :update, @question
+      = link_to 'edit', '#', class: 'question-edit-link', data: { question_id: @question.id }
+    - if can? :destroy, @question
+      = link_to 'delete', question_path(@question),
+                          method: :delete,
+                          data: { confirm: 'Delete question?' }
+  .links
+    - if @question.links.present?
+      = render 'shared/links', links: @question.links
+
+  .best
+    - if @question.best_answer_id
+      = render 'answers/best', answer: @question.best_answer
+  .answers-list
+    - if @question.answers_ex_best.exists?
+      = render @question.answers_ex_best
 
   - if user_signed_in?
-      = render 'subscriptions/subscription'
-
-  #question-files
-    = render 'shared/files', resource: @question
-
-  #reward
-    - if @question.reward
-      p Reward:
-      figure
-        = image_tag @question.reward.image
-        figcaption = @question.reward.name
-
-  = render 'shared/votes', voteable: @question
-  #question-comments
-    = render 'comments/comments', commentable: @question
-  - if user_signed_in?
-    = render 'comments/form', commentable: @question
-
-  .question-errors
-
-  = form_with model: @question, local: false, class: 'question-edit hidden', html: { id: "question-#{@question.id}" } do |f|
-    = f.label      :title
-    = f.text_field :title
-
-    = f.label      :text
-    = f.text_area  :text
-
-    = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
-
-    = f.fields_for :links do |link|
-      p = render 'shared/link_fields', f: link
-
-    p = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
-
-    = f.submit 'save'
-
-  - if can? :update, @question
-    = link_to 'edit', '#', class: 'question-edit-link', data: { question_id: @question.id }
-  - if can? :destroy, @question
-    = link_to 'delete', question_path(@question),
-                        method: :delete,
-                        data: { confirm: 'Delete question?' }
-.links
-  - if @question.links.present?
-    = render 'shared/links', links: @question.links
-
-.best
-  - if @question.best_answer_id
-    = render 'answers/best', answer: @question.best_answer
-.answers-list
-  - if @question.answers_ex_best.exists?
-    = render @question.answers_ex_best
-
-- if user_signed_in?
-  = render 'answers/form'
+    = render 'answers/form'

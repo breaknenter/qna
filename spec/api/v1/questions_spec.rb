@@ -19,7 +19,7 @@ describe 'Questions API', type: :request do
     context 'authorized' do
       let!(:questions) { create_list(:question, 2) }
       let(:question) { questions.first }
-      let(:question_response) { json['questions'].first }
+      let(:question_response) { json['questions'].last }
       let!(:answers) { create_list(:answer, 2, question: question, author: question.author) }
 
       before do
@@ -51,7 +51,7 @@ describe 'Questions API', type: :request do
 
       describe 'answers' do
         let(:answer) { answers.last }
-        let(:answer_response) { question_response['answers'].first }
+        let(:answer_response) { question_response['answers'].last }
 
         it_behaves_like 'API List' do
           let(:resource) { question_response['answers'] }
@@ -224,7 +224,7 @@ describe 'Questions API', type: :request do
     let!(:question) { create(:question) }
     let(:question_id) { question.id }
     let!(:answers) { create_list(:answer, 4, question: question, author: author) }
-    let(:answer) { answers.first }
+    let(:answer) { answers.last }
     let(:answers_response) { json['answers'] }
     let(:api_path) { "/api/v1/questions/#{question_id}/answers" }
 

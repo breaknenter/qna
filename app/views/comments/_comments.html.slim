@@ -2,5 +2,6 @@ p
   small Комментарии:
 - if commentable.comments.any?
   - commentable.comments.each do |comment|
-    p id="comment-#{comment.id}"
-      small = comment.text
+    - cache comment
+      p id="comment-#{comment.id}"
+        small = comment.text
