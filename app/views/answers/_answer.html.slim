@@ -1,42 +1,43 @@
-div class='answer' id="answer-#{answer.id}"
-  hr
-  p = answer.text
+- cache answer do
+  div class='answer' id="answer-#{answer.id}"
+    hr
+    p = answer.text
 
-  = render 'shared/votes', voteable: answer
+    = render 'shared/votes', voteable: answer
 
-  .answer-files
-    = render 'shared/files', resource: answer
+    .answer-files
+      = render 'shared/files', resource: answer
 
-  .answer-links
-    - if answer.links.present?
-      = render 'shared/links', links: answer.links
+    .answer-links
+      - if answer.links.present?
+        = render 'shared/links', links: answer.links
 
-  - if can? :best, answer
-      = link_to 'set as best', best_answer_path(answer), class: 'answers-best-link', method: :post, remote: true
+    - if can? :best, answer
+        = link_to 'set as best', best_answer_path(answer), class: 'answers-best-link', method: :post, remote: true
 
-  div id="answer-comments-#{answer.id}"
-    = render 'comments/comments', commentable: answer
-  - if user_signed_in?
-    = render 'comments/form', commentable: answer
+    div id="answer-comments-#{answer.id}"
+      = render 'comments/comments', commentable: answer
+    - if user_signed_in?
+      = render 'comments/form', commentable: answer
 
-  
-    #answer-actions
-      ul
-      - if can? :update, answer
-        li = link_to 'edit', '#', class: 'answers-edit-link', data: { answer_id: answer.id }
-      - if can? :destroy, answer
-        li = link_to 'delete', answer_path(answer), method: :delete,  remote: true
+    
+      #answer-actions
+        ul
+        - if can? :update, answer
+          li = link_to 'edit', '#', class: 'answers-edit-link', data: { answer_id: answer.id }
+        - if can? :destroy, answer
+          li = link_to 'delete', answer_path(answer), method: :delete,  remote: true
 
-      = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-        = f.label      :text
-        = f.text_field :text
+        = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+          = f.label      :text
+          = f.text_field :text
 
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
 
-        = f.fields_for :links do |link|
-          p = render 'shared/link_fields', f: link
+          = f.fields_for :links do |link|
+            p = render 'shared/link_fields', f: link
 
-          p = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
+            p = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
 
-        = f.submit 'save'
+          = f.submit 'save'

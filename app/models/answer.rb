@@ -3,7 +3,7 @@ class Answer < ApplicationRecord
   include Commentable
 
   belongs_to :author, class_name: 'User', foreign_key: 'author_id'
-  belongs_to :question
+  belongs_to :question, touch: true
 
   has_one :question_with_best_answer, class_name: 'Question', foreign_key: :best_answer_id, dependent: :nullify
 
